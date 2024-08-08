@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +23,7 @@ Route::get('/home', function () {
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:88410626.
 });
 
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/login',[LoginController::class, 'login'])->name('auth.login');
+Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.process.login');
+Route::get('/register',[LoginController::class, 'register'])->name('auth.register');
+Route::post('/register',[LoginController::class, 'processRegister'])->name('auth.process.register');
