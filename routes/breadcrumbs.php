@@ -65,4 +65,23 @@ Breadcrumbs::for('Edit', function (BreadcrumbTrail $trail, Position $position) {
 });
 
 
+// Home > Question
+Breadcrumbs::for('Question', function (BreadcrumbTrail $trail) {
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Question', route('admin.question'));
+    }
+});
 
+Breadcrumbs::for('Add Question', function (BreadcrumbTrail $trail) {
+    $trail->parent('Question');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Add Question', route('admin.question.create'));
+    }
+});
+
+Breadcrumbs::for('Add Answer', function (BreadcrumbTrail $trail) {
+    $trail->parent('Question');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Add Answer', route('admin.question.create'));
+    }
+});

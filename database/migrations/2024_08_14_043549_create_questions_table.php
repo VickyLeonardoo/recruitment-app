@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->text('description');
-            $table->text('image');
-            $table->timestamps();
+            $table->text('image')->nullable();
             $table->enum('difficult',['easy','medium','hard']);
+            $table->enum('type',['multiple_choice','essay','true_false']);
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
         });
     }
 

@@ -26,9 +26,9 @@
                 Configuration
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="charts-chartjs.html">
-                    <i class="align-middle fas fa-question"></i> <span
+            <li class="sidebar-item {{ Route::is('admin.question*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('admin.question') }}">
+                    <i class="align-middle fas fa-clipboard-question"></i> <span
                         class="align-middle">Question</span>
                 </a>
             </li>
