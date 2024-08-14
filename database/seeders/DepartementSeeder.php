@@ -16,19 +16,23 @@ class DepartementSeeder extends Seeder
         $departement = [
             [
                 'code' => 'HRD',
-                'name' => 'Human Resource Development'
+                'name' => 'Human Resource Development',
+                'slug' => 'human-resource-development',
             ],
             [
                 'code' => 'FIN',
-                'name' => 'Finance'
+                'name' => 'Finance',
+                'slug' => 'finance',
             ],
             [
                 'code' => 'IT',
-                'name' => 'Information Technology'
+                'name' => 'Information Technology',
+                'slug' => 'information-technology',
             ],
             [
                 'code' => 'MKT',
-                'name' => 'Marketing'
+                'name' => 'Marketing',
+                'slug' => 'marketing',
             ]
         ];
 

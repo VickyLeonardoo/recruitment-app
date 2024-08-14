@@ -22,7 +22,7 @@ class LoginController extends Controller
         if (Auth::guard('staff')->attempt($kredensil)) {
             $user = Auth::guard('staff')->user();
             if ($user->role_id == 1) {
-                return 'Sukses Login Admin';
+                return redirect()->route('admin.dashboard')->with('success','Login Successfully');
             }elseif ($user->role_id == 2) {
                 return 'Sukses login HRD';
             }else{
