@@ -9,7 +9,7 @@
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Warning!</strong> The ' * ' field is required
                 </div>
-                <form action="{{ route('admin.question.store') }}" method="post">
+                <form action="{{ route('admin.question.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-8">
@@ -18,7 +18,6 @@
                                 <select name="type" class="form-control-lg form-control {{ $errors->has('type') ? 'is-invalid' : '' }}">
                                     <option value="" selected disabled>Select Type</option>
                                     <option value="multiple_choice">Multiple Choice</option>
-                                    <option value="essay">Essay</option>
                                     <option value="true_false">True/False</option>
                                 </select>
                                 @error('type')

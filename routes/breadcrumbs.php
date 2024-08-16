@@ -79,9 +79,16 @@ Breadcrumbs::for('Add Question', function (BreadcrumbTrail $trail) {
     }
 });
 
-Breadcrumbs::for('Add Answer', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('Edit Question', function (BreadcrumbTrail $trail) {
     $trail->parent('Question');
     if (Auth::guard('staff')->user()->role_id == 1) {
-        $trail->push('Add Answer', route('admin.question.create'));
+        $trail->push('Edit Question', route('admin.question.create'));
+    }
+});
+
+Breadcrumbs::for('View Question', function (BreadcrumbTrail $trail) {
+    $trail->parent('Question');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('View Question', route('admin.question.create'));
     }
 });

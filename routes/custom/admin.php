@@ -40,11 +40,12 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/question/create', 'create')->name('admin.question.create'); //Menampilkan halaman create
             Route::get('/question/edit/{id}', 'edit')->name('admin.question.edit'); //Menampilkan halaman edit
             Route::post('/question/store', 'store')->name('admin.question.store'); //Menambahkan data
-            Route::post('/question/update/{id}', 'update')->name('admin.question.update'); //Mengupdate data
+            Route::post('/question/update/{id}', 'updateQuestion')->name('admin.question.update'); //Mengupdate data
             Route::get('/question/delete/{id}', 'destroy')->name('admin.question.delete'); //Menghapus data
+            Route::get('/question/show/{id}','show')->name('admin.question.show'); //Menampilkan halaman show
+            Route::post('/question/{id}/answer', 'storeAnswer')->name('admin.choice.store'); //Store data answer
 
-            Route::get('/question/editAnswer/{id}', 'editAnswer')->name('admin.question.editAnswer'); //Menampilkan halaman edit jawaban
-            Route::post('/question/updateAnswer/{id}', 'updateAnswer')->name('admin.question.updateAnswer'); //Mengupdate data jawaban
+            Route::get('/question/answer/delete/{id}', 'deleteAnswer')->name('admin.choice.delete');
 
         });
     });

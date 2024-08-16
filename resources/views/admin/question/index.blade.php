@@ -33,10 +33,10 @@
                             @foreach ($questions as $q)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $q->description }}</td>
+                                    <td >{{ $q->description }}</td>
                                     <td>{{ $q->type }}</td>
                                     <td>
-                                        <a href="{{ route('admin.question.edit',$q->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('admin.question.show',$q->id) }}" class="btn btn-primary">View</a>
                                         <a href="{{ route('admin.question.delete',$q->id) }}" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
