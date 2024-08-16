@@ -21,7 +21,32 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'is_verified',
+        'is_active',
     ];
+
+    public function user_detail(){
+        return $this->hasOne(UserDetail::class);
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    public function education_details(){
+        return $this->hasMany(EducationDetail::class);
+    }
+
+    public function experience_details(){
+        return $this->hasMany(ExperienceDetail::class);
+    }
+
+    public function skills(){
+        return $this->hasMany(Skill::class);
+    }
+
+    
 
     /**
      * The attributes that should be hidden for serialization.
