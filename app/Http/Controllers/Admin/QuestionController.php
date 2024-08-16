@@ -94,8 +94,12 @@ class QuestionController extends Controller
         // Validasi input
         $request->validate([
             'label' => 'required|string|max:255',
-            'choice' => 'required_if:answer_type,text|max:255',
-            'choice_image' => 'required_if:answer_type,image|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'choice' => 'nullable|string',
+            'choice_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], [
+            'label.required' => 'Label is required',
+            'choice.required_without' => 'You must fill in either the Answer or upload an Answer Image.',
+            'choice_image.required_without' => 'You must fill in either the Answer or upload an Answer Image.',
         ]);
 
         // Proses data dan simpan ke database
@@ -105,14 +109,14 @@ class QuestionController extends Controller
             'is_correct' => $request->has('is_correct') ? true : false,
         ];
 
-        if ($request->input('answer_type') == 'text') {
+        if ($request->choice != '') {
             $data['choice'] = $request->input('choice');
-        } elseif ($request->input('answer_type') == 'image' && $request->hasFile('choice_image')) {
+        }else{
             $image = $request->file('choice_image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
             $image->storeAs('public/answer', $imageName);
             // $image->move(public_path('images'), $imageName);
-            $data['choice'] = $imageName;
+            $data['choiceImage'] = $imageName;
         }
 
         // Simpan data ke database
@@ -122,7 +126,11 @@ class QuestionController extends Controller
         return redirect()->back()->with('success', 'Answer created successfully.');
     }
 
-    public function deleteAnswer(){
+    public function deleteAnswer($id){
+        $choice = Choice::find($id);
+
+        $choice->delete();
+        return redirect()->back()->with('success','Answer deleted successfully');
 
     }
 

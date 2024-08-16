@@ -72,9 +72,16 @@
                                         @forelse ($question->choices as $choice)
                                             <tr>
                                                 <td>{{ $choice->label }}</td>
-                                                <td>{{ $choice->choice }}</td>
                                                 <td>
-                                                    @if ($choice->is_corect)
+                                                    @if ($choice->choice)
+                                                        {{ $choice->choice }}
+                                                    @elseif ($choice->choiceImage)
+                                                        <img src="{{ asset('storage/answer/' . $choice->choiceImage) }}"
+                                                            class="img-fluid" />
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($choice->is_correct)
                                                         <span class="badge bg-success">Correct</span>
                                                     @else
                                                         <span class="badge bg-danger">Incorrect</span>
@@ -111,7 +118,8 @@
                             </div>
                             <div class="card-body text-center">
                                 @if ($question->image)
-                                    <img src="{{ asset('storage/question/' . $question->image) }}" class="img-fluid" id="filePreview">
+                                    <img src="{{ asset('storage/question/' . $question->image) }}" class="img-fluid"
+                                        id="filePreview">
                                 @else
                                     <img src="{{ asset('img/no_image.jpg') }}" class="img-fluid" id="filePreview">
                                 @endif
@@ -139,48 +147,37 @@
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for=""><strong>Label</strong></label>
-                                    <input type="text" name="label" class="form-control"
-                                        value="{{ old('label') }}">
+                                    <input type="text" name="label" class="form-control" value="{{ old('label') }}">
                                     @error('label')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for=""><strong>Answer Type</strong></label><br>
-                                    <input type="radio" name="answer_type" value="text" id="answerTypeText"
-                                        {{ old('answer_type') == 'text' ? 'checked' : '' }}> Text
-                                    <input type="radio" name="answer_type" value="image" id="answerTypeImage"
-                                        {{ old('answer_type') == 'image' ? 'checked' : '' }}> Image
-                                    @error('answer_type')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <label for=""><strong>Answer Type</strong></label>
+                                    <select id="answerType" class="form-control" name="answer_type">
+                                        <option value="text" selected>Text</option>
+                                        <option value="image">Image</option>
+                                    </select>
                                 </div>
 
-                                <div class="form-group mb-3" id="textAnswerInput"
-                                    style="{{ old('answer_type') == 'text' ? '' : 'display:none;' }}">
-                                    <label for=""><strong>Answer (Text)</strong></label>
+                                <div class="form-group mb-3" id="textInput">
+                                    <label for=""><strong>Answer</strong></label>
                                     <input type="text" name="choice" class="form-control"
-                                        value="{{ old('choice') }}">
-                                    @error('choice')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        value="{{ old('choice') }}" placeholder="Answer">
                                 </div>
 
-                                <div class="form-group mb-3" id="imageAnswerInput"
-                                    style="{{ old('answer_type') == 'image' ? '' : 'display:none;' }}">
-                                    <label for=""><strong>Answer (Image)</strong></label>
-                                    <input type="file" name="choice_image" class="form-control" id="fileInput2">
-                                    @error('choice_image')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                <div class="form-group mb-3" id="imageInput" style="display: none;">
+                                    <label for=""><strong>Upload Image</strong></label>
+                                    <input type="file" class="form-control mt-3" id="fileInput"
+                                        accept="image/png, image/gif, image/jpeg" name="choice_image"
+                                        value="{{ old('choice_image') }}">
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for=""><strong>Is Correct</strong></label>
                                     <input type="checkbox" name="is_correct" {{ old('is_correct') ? 'checked' : '' }}>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>
                         </div>
@@ -193,88 +190,80 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
     @foreach ($question->choices as $choice)
-        <div class="modal fade" id="editModal{{ $choice->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Answer</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <form action="" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('PUT') <!-- Jika menggunakan method PUT untuk update -->
+    <div class="modal fade" id="editModal{{ $choice->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Answer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <label for=""><strong>Label</strong></label>
+                                    <input type="text" name="label" class="form-control"
+                                        value="{{ old('label', $choice->label) }}">
+                                    @error('label')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for=""><strong>Label</strong></label>
-                                        <input type="text" name="label" class="form-control"
-                                            value="{{ old('label', $choice->label) }}">
-                                        @error('label')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                <div class="form-group mb-3">
+                                    <label for=""><strong>Answer Type</strong></label>
+                                    <select id="answerTypeEdit{{ $choice->id }}" class="form-control" name="answer_type">
+                                        <option value="text" {{ $choice->choice ? 'selected' : '' }}>Text</option>
+                                        <option value="image" {{ $choice->choiceImage ? 'selected' : '' }}>Image</option>
+                                    </select>
+                                </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for=""><strong>Answer Type</strong></label><br>
-                                        <input type="radio" name="answer_type" value="text"
-                                            id="editAnswerTypeText{{ $choice->id }}"
-                                            {{ old('answer_type', $choice->answer_type) == 'text' ? 'checked' : '' }}> Text
-                                        <input type="radio" name="answer_type" value="image"
-                                            id="editAnswerTypeImage{{ $choice->id }}"
-                                            {{ old('answer_type', $choice->answer_type) == 'image' ? 'checked' : '' }}>
-                                        Image
-                                        @error('answer_type')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                <!-- Conditionally render the Text input -->
+                                <div class="form-group mb-3" id="textInputEdit{{ $choice->id }}"
+                                    style="{{ $choice->choice ? '' : 'display: none;' }}">
+                                    <label for=""><strong>Answer</strong></label>
+                                    <input type="text" name="choice" class="form-control"
+                                        value="{{ old('choice', $choice->choice) }}">
+                                </div>
 
-                                    <div class="form-group mb-3" id="editTextAnswerInput{{ $choice->id }}"
-                                        style="{{ old('answer_type', $choice->answer_type) == 'text' ? '' : 'display:none;' }}">
-                                        <label for=""><strong>Answer (Text)</strong></label>
-                                        <input type="text" name="choice" class="form-control"
-                                            value="{{ old('choice', $choice->choice) }}">
-                                        @error('choice')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                <!-- Conditionally render the Image input -->
+                                <div class="form-group mb-3" id="imageInputEdit{{ $choice->id }}"
+                                    style="{{ $choice->choiceImage ? '' : 'display: none;' }}">
+                                    <label for=""><strong>Upload Image</strong></label>
+                                    <input type="file" class="form-control" id="fileInput3"
+                                        accept="image/png, image/gif, image/jpeg" name="choice_image">
+                                </div>
 
-                                    <div class="form-group mb-3" id="editImageAnswerInput{{ $choice->id }}"
-                                        style="{{ old('answer_type', $choice->answer_type) == 'image' ? '' : 'display:none;' }}">
-                                        <label for=""><strong>Answer (Image)</strong></label>
-                                        <input type="file" name="choice_image" class="form-control"
-                                            id="editFileInput2{{ $choice->id }}">
-                                        <img src="{{ old('choice_image', $choice->choice_image ? asset('images/' . $choice->choice_image) : asset('img/no_image.jpg')) }}"
-                                            class="img-fluid mt-3" id="editFilePreview2{{ $choice->id }}">
-                                        @error('choice_image')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                <div class="form-group mb-3">
+                                    <label for=""><strong>Is Correct</strong></label>
+                                    <input type="checkbox" name="is_correct"
+                                        {{ old('is_correct', $choice->is_correct) ? 'checked' : '' }}>
+                                </div>
 
-                                    <div class="form-group mb-3">
-                                        <label for=""><strong>Is Correct</strong></label>
-                                        <input type="checkbox" name="is_correct"
-                                            {{ old('is_correct', $choice->is_correct) ? 'checked' : '' }}>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </form>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <img src="{{ old('choice_image', $choice->choice_image ? asset('images/' . $choice->choice_image) : asset('img/no_image.jpg')) }}"
-                                            class="img-fluid mt-3" id="editFilePreview2{{ $choice->id }}">
-                                    </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <div class="card-header text-center">
+                                    Current Image
+                                </div>
+                                <div class="card-body text-center">
+                                    @if ($choice->choiceImage)
+                                        <img src="{{ asset('storage/answer/' . $choice->choiceImage) }}"
+                                            class="img-fluid" id="filePreview3">
+                                    @else
+                                        <img src="{{ asset('img/no_image.jpg') }}" class="img-fluid"
+                                            id="filePreview3">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -282,85 +271,70 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
+@endforeach
 
 
 @endsection
 
 @push('js')
     <script>
-        document.getElementById('fileInput2').onchange = function(event) {
-            var reader = new FileReader();
-
-            reader.onload = function() {
-                var output = document.getElementById('filePreview2');
-                output.src = reader.result;
-            };
-
-            reader.readAsDataURL(event.target.files[0]);
-        };
-
         document.addEventListener("DOMContentLoaded", function() {
-            var exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-            @if ($errors->any())
-                exampleModal.show();
-            @endif
-
-            // Toggle input fields based on answer type selection
-            document.querySelectorAll('input[name="answer_type"]').forEach(function(el) {
-                el.addEventListener('change', function() {
-                    if (this.value === 'text') {
-                        document.getElementById('textAnswerInput').style.display = '';
-                        document.getElementById('imageAnswerInput').style.display = 'none';
-                    } else if (this.value === 'image') {
-                        document.getElementById('textAnswerInput').style.display = 'none';
-                        document.getElementById('imageAnswerInput').style.display = '';
-                    }
-                });
+            // Event listener untuk perubahan pada jenis jawaban
+            document.getElementById('answerType').addEventListener('change', function() {
+                var value = this.value;
+                console.log('Selected Answer Type:', value); // Debugging line
+                document.getElementById('textInput').style.display = value === 'text' ? 'block' : 'none';
+                document.getElementById('imageInput').style.display = value === 'image' ? 'block' : 'none';
             });
 
-            // Initialize based on old input
-            if (document.querySelector('input[name="answer_type"]:checked').value === 'image') {
-                document.getElementById('textAnswerInput').style.display = 'none';
-                document.getElementById('imageAnswerInput').style.display = '';
-            }
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            @foreach ($question->choices as $choice)
-                document.getElementById('editFileInput2{{ $choice->id }}').onchange = function(event) {
-                    var reader = new FileReader();
-                    reader.onload = function() {
-                        var output = document.getElementById('editFilePreview2{{ $choice->id }}');
-                        output.src = reader.result;
-                    };
-                    reader.readAsDataURL(event.target.files[0]);
+            // Perbarui tampilan saat modal ditampilkan
+            var exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            document.getElementById('exampleModal').addEventListener('show.bs.modal', function() {
+                var answerType = document.getElementById('answerType').value;
+                console.log('Modal Open - Answer Type:', answerType); // Debugging line
+                document.getElementById('textInput').style.display = answerType === 'text' ? 'block' :
+                    'none';
+                document.getElementById('imageInput').style.display = answerType === 'image' ? 'block' :
+                    'none';
+            });
+
+            // Update preview image when a file is selected
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var output = document.getElementById('filePreview2');
+                    output.src = reader.result;
                 };
-
-                document.getElementById('editAnswerTypeText{{ $choice->id }}').addEventListener('change',
-                    function() {
-                        document.getElementById('editTextAnswerInput{{ $choice->id }}').style.display = '';
-                        document.getElementById('editImageAnswerInput{{ $choice->id }}').style.display =
-                            'none';
-                    });
-
-                document.getElementById('editAnswerTypeImage{{ $choice->id }}').addEventListener('change',
-                    function() {
-                        document.getElementById('editTextAnswerInput{{ $choice->id }}').style.display =
-                            'none';
-                        document.getElementById('editImageAnswerInput{{ $choice->id }}').style.display = '';
-                    });
-
-                if (document.querySelector('input[name="answer_type"]:checked') && document.querySelector(
-                        'input[name="answer_type"]:checked').value === 'image') {
-                    document.getElementById('editTextAnswerInput{{ $choice->id }}').style.display = 'none';
-                    document.getElementById('editImageAnswerInput{{ $choice->id }}').style.display = '';
-                } else {
-                    document.getElementById('editTextAnswerInput{{ $choice->id }}').style.display = '';
-                    document.getElementById('editImageAnswerInput{{ $choice->id }}').style.display = 'none';
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
                 }
-            @endforeach
+            });
+            // Initialize modal state based on form data
+            var initialAnswerType = document.getElementById('answerType').value;
+            console.log('Initial Answer Type:', initialAnswerType); // Debugging line
+            document.getElementById('textInput').style.display = initialAnswerType === 'text' ? 'block' : 'none';
+            document.getElementById('imageInput').style.display = initialAnswerType === 'image' ? 'block' : 'none';
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        // Handler for select change event
+        $(document).on('change', 'select[id^="answerTypeEdit"]', function() {
+            // Get the modal ID based on the select element
+            const modalId = $(this).attr('id').replace('answerTypeEdit', '');
+            const selectedValue = $(this).val();
+
+            // Toggle visibility based on selected value
+            if (selectedValue === 'text') {
+                $('#textInputEdit' + modalId).show();
+                $('#imageInputEdit' + modalId).hide();
+            } else if (selectedValue === 'image') {
+                $('#textInputEdit' + modalId).hide();
+                $('#imageInputEdit' + modalId).show();
+            }
+        }).trigger('change'); // Trigger change event on page load to set initial visibility
+    });
+</script>
 @endpush
