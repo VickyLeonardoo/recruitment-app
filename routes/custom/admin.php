@@ -41,12 +41,11 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/question/edit/{id}', 'edit')->name('admin.question.edit'); //Menampilkan halaman edit
             Route::post('/question/store', 'store')->name('admin.question.store'); //Menambahkan data
             Route::post('/question/update/{id}', 'updateQuestion')->name('admin.question.update'); //Mengupdate data
-            Route::get('/question/delete/{id}', 'destroy')->name('admin.question.delete'); //Menghapus data
+            Route::get('/question/delete/{id}', 'deleteQuestion')->name('admin.question.delete'); //Menghapus data
             Route::get('/question/show/{id}','show')->name('admin.question.show'); //Menampilkan halaman show
             Route::post('/question/{id}/answer', 'storeAnswer')->name('admin.choice.store'); //Store data answer
 
             Route::get('/question/answer/delete/{id}', 'deleteAnswer')->name('admin.choice.delete');
-
         });
     });
 });

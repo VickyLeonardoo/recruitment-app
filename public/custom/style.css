@@ -1,0 +1,37 @@
+.onlybottom {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-right-style: hidden;
+    border-bottom: 2px solid #000000 !important;
+    outline: 0;
+    margin-top: -12px;
+}
+
+.removall {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #F4F5F7;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-right-style: hidden;
+    border-bottom-style: hidden;
+    outline: 0;
+    margin-top: -12px;
+}

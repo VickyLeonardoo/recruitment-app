@@ -27,3 +27,5 @@ Route::get('/login',[LoginController::class, 'login'])->name('auth.login');
 Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.process.login');
 Route::get('/register',[LoginController::class, 'register'])->name('auth.register');
 Route::post('/register',[LoginController::class, 'processRegister'])->name('auth.process.register');
+Route::get('/logout',[LoginController::class, 'logout'])->name('auth.logout');
+

@@ -9,7 +9,7 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
@@ -27,16 +27,19 @@
 			<div class="row vh-100">
 				<div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
 					<div class="d-table-cell align-middle">
-
-						<div class="text-center mt-4">
-							<h1 class="h2">Welcome back!</h1>
-							<p class="lead">
-								Sign in to your account to continue
-							</p>
+						@if (session('success'))
+						<div class="alert alert-success" role="alert">
+							{{ session('success') }}
 						</div>
-
+						@endif
 						<div class="card">
 							<div class="card-body">
+								<div class="text-center mt-4">
+									<h1 class="h2">Welcome back!</h1>
+									<p class="lead">
+										Sign in to your account to continue
+									</p>
+								</div>
 								<div class="m-sm-3">
 									<form method="POST" action="{{ route('auth.process.login') }}">
                                         @csrf

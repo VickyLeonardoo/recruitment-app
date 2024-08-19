@@ -131,7 +131,13 @@ class QuestionController extends Controller
 
         $choice->delete();
         return redirect()->back()->with('success','Answer deleted successfully');
+    }
 
+    public function deleteQuestion($id){
+        $question = Question::find($id);
+
+        $question->delete();
+        return redirect()->back()->with('success','Question deleted successfully');
     }
 
 }

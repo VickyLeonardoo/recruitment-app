@@ -31,13 +31,18 @@ class LoginController extends Controller
         }elseif (Auth::guard('user')->attempt($kredensil)) {
             $user = Auth::guard('user')->user();
             if ($user->role_id == 4) {
-                if ($user->active == true) {
-                    return 'sukses login pelamar';
+                if ($user->is_active == true) {
+                    return redirect()->route('applicant.profile')->with('success','Login Successfully');
                 }else{
                     return 'gagal akun belum diverifikasi';
                 }
             }
         }
         return redirect()->back()->with('error','Login Gagal, Email atau Password Kamu Salah!');
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('auth.login')->with('success','Successfully Logged Out');
     }
 }

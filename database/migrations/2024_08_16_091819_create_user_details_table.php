@@ -19,12 +19,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
-            $table->string('state')->nullable();
-            $table->string('country')->nullable();
-            $table->string('zip_code')->nullable();
             $table->date('dob')->nullable();
             $table->enum('gender',['male','female'])->nullable();
-            $table->string('marital_status')->nullable();
+            $table->string('status')->nullable();
             $table->string('nationality')->nullable();
             $table->string('religion')->nullable();
             $table->timestamps();
