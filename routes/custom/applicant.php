@@ -9,6 +9,7 @@ Route::group(['middleware' => ['auth:user']],function(){
         
         Route::controller(ProfileController::class)->group(function(){
             Route::get('/profile', 'index')->name('applicant.profile');
+            Route::post('/profile/edit', 'updateInfo')->name('applicant.profile.info');
         });
     });
 });

@@ -82,7 +82,11 @@
                         <div class="col-sm-2">
                         </div>
                         <div class="col-sm-8">
-
+                            @if (session('success'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                             <ul class="navbar-nav">
                                 @if (!Auth::guard('user')->user()->user_detail)
                                     <div class="alert alert-warning" style="color: black" role="alert">

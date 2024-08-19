@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,7 @@ Route::get('/home', function () {
 
 Route::get('/login',[LoginController::class, 'login'])->name('auth.login');
 Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.process.login');
-Route::get('/register',[LoginController::class, 'register'])->name('auth.register');
-Route::post('/register',[LoginController::class, 'processRegister'])->name('auth.process.register');
+Route::get('/register',[RegisterController::class, 'register'])->name('auth.register');
+Route::post('/register',[RegisterController::class, 'processRegister'])->name('auth.process.register');
 Route::get('/logout',[LoginController::class, 'logout'])->name('auth.logout');
 
