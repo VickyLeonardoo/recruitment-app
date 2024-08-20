@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-sm-8">
                             @if (session('success'))
-                                <div class="alert alert-success text-dark" role="alert" >
+                                <div class="alert alert-success text-dark" role="alert">
                                     {{ session('success') }}
                                 </div>
                             @endif
@@ -96,7 +96,8 @@
                                     <div class="alert alert-warning" style="color: black" role="alert">
                                         <strong>Peringatan!</strong> Kamu belum melengkapi profile kamu, mohon lengkapi
                                         profile agar dapat melakukan pendaftaran.
-                                        <a href="{{ route('applicant.profile') }}" class="alert-link">Klik Disini</a>
+                                        <a href="{{ route('applicant.profile.info') }}" class="alert-link">Klik
+                                            Disini</a>
                                     </div>
                                 @endif
                                 <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
@@ -110,8 +111,8 @@
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link {{ Route::is('applicant.profile*') ? 'active' : '' }} ps-0"
-                                                id="home-tab" href="{{ route('applicant.profile.info') }}" role="tab"
-                                                aria-controls="overview" aria-selected="true">Profile</a>
+                                                id="home-tab" href="{{ route('applicant.profile.info') }}"
+                                                role="tab" aria-controls="overview" aria-selected="true">Profile</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences"
@@ -168,7 +169,15 @@
     <script src="{{ asset('applicant') }}/js/dashboard.js"></script>
     <script src="{{ asset('applicant') }}/js/Chart.roundedBarCharts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if(session('success'))
+    @stack('js')
+    <script>
+        $(function() {
+            $('#datepicker').datepicker();
+
+            $('#datepicker1').datepicker();
+        });
+    </script>
+    @if (session('success'))
         <script>
             Swal.fire({
                 title: 'Success!',

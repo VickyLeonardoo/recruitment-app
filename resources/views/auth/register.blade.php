@@ -169,7 +169,7 @@
     <script src="js/app.js"></script>
     <script>
        $(function() {
-			$("#datepicker").datepicker();
+			$("#datepickerYear").datepicker();
 		});
     </script>
     </head>

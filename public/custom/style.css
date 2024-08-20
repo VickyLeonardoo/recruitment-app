@@ -67,6 +67,12 @@
     background-size: 20px 20px; /* Resize the icon if needed */
 }
 
-.text-black {
-    
-}
+.ui-datepicker-calendar {
+    display: none;
+ }
+ .ui-datepicker-month {
+    display: none;
+ }
+ .ui-datepicker-next,.ui-datepicker-prev {
+   display:none;
+ }

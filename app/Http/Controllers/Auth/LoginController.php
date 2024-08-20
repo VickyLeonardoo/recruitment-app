@@ -32,7 +32,7 @@ class LoginController extends Controller
             $user = Auth::guard('user')->user();
             if ($user->role_id == 4) {
                 if ($user->is_active == true) {
-                    return redirect()->route('applicant.profile')->with('success','Login Successfully');
+                    return redirect()->route('applicant.profile.info')->with('success','Login Successfully');
                 }else{
                     return 'gagal akun belum diverifikasi';
                 }
