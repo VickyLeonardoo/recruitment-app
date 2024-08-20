@@ -35,3 +35,38 @@
     outline: 0;
     margin-top: -12px;
 }
+
+.form-register {
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-right-style: hidden;
+    border-bottom: 2px solid #000000 !important;
+    outline: 0;
+}
+
+.register-label{
+    font-weight: bolder;
+    font-size: 1rem;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.form-register.datepicker {
+    background: url('http://jqueryui.com/resources/demos/datepicker/images/calendar.gif') no-repeat right 10px center;
+    padding-right: 40px; /* Adjust padding to make room for the icon */
+    background-size: 20px 20px; /* Resize the icon if needed */
+}
+
+.text-black {
+    
+}

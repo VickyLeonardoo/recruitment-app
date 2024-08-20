@@ -20,6 +20,10 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('applicant') }}/css/vertical-layout-light/style.css">
     <link rel="stylesheet" href="{{ asset('custom') }}/style.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+    {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
     <style>
@@ -83,7 +87,7 @@
                         </div>
                         <div class="col-sm-8">
                             @if (session('success'))
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert alert-success text-dark" role="alert" >
                                     {{ session('success') }}
                                 </div>
                             @endif
@@ -106,7 +110,7 @@
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
                                             <a class="nav-link {{ Route::is('applicant.profile*') ? 'active' : '' }} ps-0"
-                                                id="home-tab" href="{{ route('applicant.profile') }}" role="tab"
+                                                id="home-tab" href="{{ route('applicant.profile.info') }}" role="tab"
                                                 aria-controls="overview" aria-selected="true">Profile</a>
                                         </li>
                                         <li class="nav-item">
@@ -163,6 +167,17 @@
     <!-- Custom js for this page-->
     <script src="{{ asset('applicant') }}/js/dashboard.js"></script>
     <script src="{{ asset('applicant') }}/js/Chart.roundedBarCharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
     <!-- End custom js for this page-->
 </body>
 
