@@ -24,7 +24,15 @@ Route::group(['middleware' => ['auth:user']],function(){
             Route::post('/profile/experience/update/{id}', 'updateExperience')->name('applicant.profile.experience.update');
             Route::get('/profile/experience/delete/{id}', 'deleteExperience')->name('applicant.profile.experience.delete');
 
-            
+            //SKills
+            Route::get('/profile/skills','skills')->name('applicant.profile.skills');
+            Route::post('/profile/skills/store', 'storeSkills')->name('applicant.profile.skills.store');
+            Route::post('/profile/skills/update/{id}', 'updateSkills')->name('applicant.profile.skills.update');
+            Route::get('/profile/skills/delete/{id}', 'deleteSkills')->name('applicant.profile.skills.delete');
+
+            //Language
+            Route::get('/profile/language', 'language')->name('applicant.profile.language');
+            Route::post('/profile/language/store', 'storeLanguage')->name('applicant.profile.store');
 
         });
     });

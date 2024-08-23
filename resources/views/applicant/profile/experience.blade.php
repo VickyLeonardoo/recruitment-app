@@ -61,7 +61,7 @@
                         <div class="form-group mb-3">
                             <label for="" class="register-label">Nama Perusahaan</label>
                             <input type="text" placeholder="Masukkan nama perusahaan tempat anda bekerja sebelumnya" name="company_name"
-                                class="onlybottom" value="{{ old('university') }}">
+                                class="onlybottom" value="{{ old('company_name') }}">
                             @error('company_name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Applicant;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Skill;
 use App\Models\UserDetail;
 use Illuminate\Http\Request;
 use App\Models\EducationDetail;
@@ -20,25 +21,30 @@ class ProfileController extends Controller
     public function updateInfo(Request $request){
         $user = Auth::user();
         $user_id = $user->id;
-        $user_detail_id = $user->user_detail->id;
-
+    
         $data = $request->validate([
             'full_name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user_id,
-            'identity_no' => 'required|string|digits:16|unique:user_details,identity_no,' . $user_detail_id,
+            'identity_no' => 'required|string|digits:16|unique:user_details,identity_no,' . ($user->user_detail->id ?? 'NULL'),
             'dob' => 'required|date',
             'gender' => 'required|string',
             'city' => 'required|string',
             'address' => 'required|string',
-            'phone' => 'required|string|unique:user_details,phone,' . $user_detail_id,
+            'phone' => 'required|string|unique:user_details,phone,' . ($user->user_detail->id ?? 'NULL'),
             'religion' => 'required|string',
             'status' => 'required|string',
             'nationality' => 'required|string',
         ]);
-
-        // Update data user detail
-        $user->user_detail->update($data);
-
+    
+        // Cek apakah user_detail sudah ada
+        if ($user->user_detail) {
+            // Jika user_detail ada, lakukan update
+            $user->user_detail->update($data);
+        } else {
+            // Jika user_detail tidak ada, buat data baru
+            $user->user_detail()->create($data);
+        }
+    
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
@@ -134,7 +140,7 @@ class ProfileController extends Controller
         $data['user_id'] = $user->id;
 
         ExperienceDetail::create($data);
-        return redirect()->back()->with('success','Data berhasil disimpan');
+    return redirect()->back()->with('success','Data berhasil disimpan');
     }
 
     public function updateExperience(Request $request,$id){
@@ -169,6 +175,53 @@ class ProfileController extends Controller
         $experience->delete();
         return redirect()->back()->with('success','Data berhasil dihapus');
     }
+
+    public function skills(){
+        return view('applicant.profile.skills');
+    }
+
+    public function storeSkills(Request $request){
+        $request->validate([
+            'name' => 'required|string',
+        ],[
+            'name.required' => 'Nama keahlian harus diisi',
+        ]);
+
+        $user = Auth::user();
+        $data = $request->only(['name']);
+        $data['user_id'] = $user->id;
+
+        $user->skill_details()->create($data);
+        return redirect()->back()->with('success','Data berhasil disimpan');
+    }
+
+    public function updateSkills(Request $request,$id){
+        session()->flash('edit_id', $id);
+
+        $request->validate([
+            'name' => 'required|string',
+        ],[
+            'name.required' => 'Nama keahlian harus diisi',
+        ]);
+
+        $skill = Skill::find($id);
+        $skill->update($request->only(['name']));
+        return redirect()->back()->with('success','Data berhasil disimpan');
+    }
+
+    public function deleteSkills(Request $request, $id){
+        $skill = Skill::find($id);
+        $skill->delete();
+        return redirect()->back()->with('success','Data berhasil dihapus');
+    }
+
+    public function language(){
+        return view('applicant.profile.language');
+    }
+
+    // public function 
+
+
 
 
 }

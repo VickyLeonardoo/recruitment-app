@@ -16,6 +16,11 @@
                     <li class="nav-item">
                         <a href="{{ route('applicant.profile.experience') }}" class="nav-link {{ Route::is('applicant.profile.experience') ? 'active' : '' }}" >Pengalaman</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('applicant.profile.skills') }}" class="nav-link {{ Route::is('applicant.profile.skills') ? 'active' : '' }}" >Keahlian</a>
+                    </li>
+
                 </ul>
                 <div class="tab-content pt-2">
                     <div class="tab-pane fade show active profile-edit pt-3" id="informasi-pribadi">

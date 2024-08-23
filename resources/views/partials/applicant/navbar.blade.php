@@ -100,11 +100,11 @@
                                             Disini</a>
                                     </div>
                                 @endif
-                                <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+                                {{-- <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
                                     <h4 class="welcome-text">Good Morning, <span
                                             class="text-black fw-bold">{{ Auth::guard('user')->user()->email }}</span>
                                     </h4>
-                                </li>
+                                </li> --}}
                             </ul>
                             <div class="home-tab">
                                 <div class="d-sm-flex align-items-center justify-content-end border-bottom">
