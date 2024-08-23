@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\EducationDetail;
 use App\Models\ExperienceDetail;
 use App\Http\Controllers\Controller;
+use App\Models\Language;
+use App\Models\LanguageDetail;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -18,7 +20,7 @@ class ProfileController extends Controller
         return view('applicant.profile.info');
     }
 
-    public function updateInfo(Request $request){
+    public function updateInfo(Request $request) {
         $user = Auth::user();
         $user_id = $user->id;
     
@@ -35,6 +37,14 @@ class ProfileController extends Controller
             'status' => 'required|string',
             'nationality' => 'required|string',
         ]);
+    
+        // Hitung usia berdasarkan tanggal lahir
+        $age = Carbon::parse($request->dob)->age;
+    
+        // Jika usia kurang dari 18 tahun, kembalikan dengan error
+        if ($age < 18) {
+            return redirect()->back()->withErrors(['dob' => 'Umur minimal adalah 18 tahun.'])->withInput();
+        }
     
         // Cek apakah user_detail sudah ada
         if ($user->user_detail) {
@@ -216,10 +226,76 @@ class ProfileController extends Controller
     }
 
     public function language(){
-        return view('applicant.profile.language');
+        return view('applicant.profile.language',[
+            'langs' => Language::all(),
+        ]);
     }
 
-    // public function 
+    public function storeLanguage(Request $request){
+        $data = $request->validate([
+            'language_id' => 'required',
+            'level' => 'required'
+        ],[
+            'language_id.required' => 'Nama bahasa harus diisi',
+            'level.required' => 'Level keahlian harus diisi',
+        ]);
+
+        $user = Auth::user();
+        $data['user_id'] = $user->id;
+
+        $user->language_details()->create($data);
+        return redirect()->back()->with('success','Data berhasil disimpan');
+    }
+
+    public function deleteLanguage(Request $request, $id){
+        $language = LanguageDetail::find($id);
+        $language->delete();
+        return redirect()->back()->with('success','Data berhasil dihapus');
+    }
+
+    public function overview(){
+        return view('applicant.profile.overview',[
+            'user' => Auth::user(),
+        ]);
+    }
+
+    public function updateProfilePicture(Request $request){
+        $user = Auth::user();
+
+        $request->validate([
+            'profile_picture' => 'required|mimes:png,jpg'
+        ],[
+           'profile_picture.required' => 'Foto profil harus diisi'
+        ]);
+
+        if ($request->hasFile('profile_picture')) {
+            
+        }
+
+        if ($request->hasFile('profile_picture')) {
+            if ($user->user_detail->profile_picture && file_exists(storage_path('app/public/question/' . $user->user_detail->profile_picture))) {
+                unlink(storage_path('app/public/profile-picture/' . $user->user_detail->profile_picture));
+            }
+            $image = $request->file('profile_picture');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->storeAs('public/profile-picture', $imageName);
+            $data['image'] = $imageName;
+        }
+
+
+        if ($user->user_detail) {
+            $user->user_detail->profile_picture = $imageName;
+            $user->user_detail->save();
+        }else{
+            $user->user_detail()->create([
+                'profile_picture' => $request->profile_picture,
+            ]);
+        }
+
+        return redirect()->back()->with('success','Foto profil berhasil diupload');
+
+
+    }
 
 
 

@@ -15,16 +15,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Auth::guard('user')->user()->skill_details)
-                            @forelse (Auth::guard('user')->user()->skill_details as $skill)
+                        @if (Auth::guard('user')->user()->language_details)
+                            @forelse (Auth::guard('user')->user()->language_details as $lang)
                                 <tr>
-                                    <td>{{ $skill->name }}</td>
+                                    <td>{{ $lang->language->name }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#editModal{{ $skill->id }}">
-                                            Edit
-                                        </button>
-                                        <button class="btn btn-danger delete-btn" data-id="{{ $skill->id }}">
+                                        <button class="btn btn-danger delete-btn" data-id="{{ $lang->id }}">
                                             Hapus
                                         </button>
                                     </td>
@@ -49,16 +45,27 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Tambah Keahlian</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('applicant.profile.skills.store') }}" method="POST">
+                <form action="{{ route('applicant.profile.language.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group mb-3">
-                            <label for="" class="register-label">Nama Keahlian</label>
-                            <input type="text" placeholder="Masukkan keahlian kamu" autocomplete="off" name="name"
-                                class="onlybottom" value="{{ old('name') }}">
+                            <label for="" class="register-label">Bahasa</label>
+                            <select name="language_id" class="onlybottom">
+                                @foreach ($langs as $lang)
+                                    <option value="{{ $lang->id }}">{{ $lang->name }}</option>
+                                @endforeach
+                            </select>
                             @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="" class="register-label">Level Keahlian</label>
+                            <select name="level" class="onlybottom">
+                                <option value="Pasif">Pasif</option>
+                                <option value="Aktif">Aktif</option>
+
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -68,71 +75,14 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal Tambah Edit Data Pendidikan -->
-    @if (Auth::guard('user')->user()->skill_details)
-        @foreach (Auth::guard('user')->user()->skill_details as $skill)
-            <div class="modal fade" id="editModal{{ $skill->id }}" data-bs-backdrop="static"
-                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Edit Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <form action="{{ route('applicant.profile.skills.update', $skill->id) }}"
-                            method="POST">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="form-group mb-3">
-                                    <label for="" class="register-label">Nama Perusahaan</label>
-                                    <input type="text" placeholder="Masukkan nama keahlian kamu" name="name"
-                                        class="onlybottom" value="{{ $skill->name }}">
-                                    @error('name')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary text-white">Simpan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
-    {{-- End Modal --}}
-
 @endsection
 @push('js')
-    <script>
-        $(document).ready(function() {
-            @if ($errors->any())
-                @if (session()->has('edit_id'))
-                    var editModalId = {{ session('edit_id') }};
-                    var editModal = new bootstrap.Modal(document.getElementById('editModal' + editModalId), {
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    editModal.show();
-                @else
-                    var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    myModal.show();
-                @endif
-            @endif
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const dataId = this.getAttribute('data-id');
-                    const deleteUrl = `{{ route('applicant.profile.skills.delete', ':id') }}`
+                    const deleteUrl = `{{ route('applicant.profile.language.delete', ':id') }}`
                         .replace(':id', dataId);
 
                     Swal.fire({

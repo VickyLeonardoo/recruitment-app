@@ -20,11 +20,12 @@ class DatabaseSeeder extends Seeder
         // ]);'
 
         $this->call([
-           RoleSeeder::class, 
-           DepartementSeeder::class,
-           PositionSeeder::class,
-           StaffSeeder::class, 
-           UserSeeder::class,
+            RoleSeeder::class, 
+            DepartementSeeder::class,
+            PositionSeeder::class,
+            StaffSeeder::class, 
+            UserSeeder::class,
+            LanguageSeeder::class,
         ]);
     }
 }

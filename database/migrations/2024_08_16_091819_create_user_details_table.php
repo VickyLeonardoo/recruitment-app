@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('nationality')->nullable();
             $table->string('religion')->nullable();
+            $table->text('profile_picture')->nullable();
             $table->timestamps();
         });
     }

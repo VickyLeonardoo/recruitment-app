@@ -24,6 +24,7 @@
     {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
     <style>
@@ -169,6 +170,8 @@
     <script src="{{ asset('applicant') }}/js/dashboard.js"></script>
     <script src="{{ asset('applicant') }}/js/Chart.roundedBarCharts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     @stack('js')
     <script>
         $(function() {

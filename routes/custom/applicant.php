@@ -32,7 +32,11 @@ Route::group(['middleware' => ['auth:user']],function(){
 
             //Language
             Route::get('/profile/language', 'language')->name('applicant.profile.language');
-            Route::post('/profile/language/store', 'storeLanguage')->name('applicant.profile.store');
+            Route::post('/profile/language/store', 'storeLanguage')->name('applicant.profile.language.store');
+            Route::get('/profile/language/delete/{id}', 'deleteLanguage')->name('applicant.profile.language.delete');
+
+            Route::get('/profile/overview', 'overview')->name('applicant.profile.overview');
+            Route::post('/profile/picture', 'updateProfilePicture')->name('applicant.profile.picture');
 
         });
     });

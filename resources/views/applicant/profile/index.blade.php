@@ -6,6 +6,9 @@
                 <!-- Bordered Tabs -->
                 <ul class="nav nav-tabs nav-tabs-bordered">
                     <li class="nav-item">
+                        <a href="{{ route('applicant.profile.overview') }}" class="nav-link {{ Route::is('applicant.profile.overview') ? 'active' : '' }}" >Overview</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('applicant.profile.info') }}" class="nav-link {{ Route::is('applicant.profile.info') ? 'active' : '' }}" >Informasi Pribadi</a>
                     </li>
 
@@ -19,6 +22,10 @@
 
                     <li class="nav-item">
                         <a href="{{ route('applicant.profile.skills') }}" class="nav-link {{ Route::is('applicant.profile.skills') ? 'active' : '' }}" >Keahlian</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('applicant.profile.language') }}" class="nav-link {{ Route::is('applicant.profile.language') ? 'active' : '' }}" >Bahasa Asing</a>
                     </li>
 
                 </ul>
