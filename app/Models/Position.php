@@ -13,4 +13,8 @@ class Position extends Model
     public function departement(){
         return $this->belongsTo(Departement::class);
     }
+
+    public function job(){
+        return $this->hasMany(JobVacancy::class);
+    }
 }

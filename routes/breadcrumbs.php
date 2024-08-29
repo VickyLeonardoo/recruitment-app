@@ -92,3 +92,24 @@ Breadcrumbs::for('View Question', function (BreadcrumbTrail $trail) {
         $trail->push('View Question', route('admin.question.create'));
     }
 });
+
+
+Breadcrumbs::for('Job vacancy', function (BreadcrumbTrail $trail) {
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Job Vacancy', route('admin.job'));
+    }
+});
+
+Breadcrumbs::for('Job List', function (BreadcrumbTrail $trail) {
+    $trail->parent('Job vacancy');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Job List', route('admin.job'));
+    }
+});
+
+Breadcrumbs::for('Add Job', function (BreadcrumbTrail $trail) {
+    $trail->parent('Job vacancy');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Job List', route('admin.job'));
+    }
+});

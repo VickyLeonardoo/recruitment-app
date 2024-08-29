@@ -23,6 +23,31 @@
             </li>
 
             <li class="sidebar-header">
+                Menu
+            </li>
+
+            <li class="sidebar-item {{ Route::is('admin.job*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('admin.job') }}">
+                    <i class="align-middle fas fa-clipboard-question"></i> <span
+                        class="align-middle">Job Vacancy</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('admin.question') }}">
+                    <i class="align-middle fas fa-clipboard-question"></i> <span
+                        class="align-middle">Application</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('admin.question') }}">
+                    <i class="align-middle fas fa-clipboard-question"></i> <span
+                        class="align-middle">Interview</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
                 Configuration
             </li>
 

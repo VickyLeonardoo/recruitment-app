@@ -14,4 +14,8 @@ class Departement extends Model
     public function position(){
         return $this->hasMany(Position::class);
     }
+
+    public function job(){
+        return $this->hasMany(JobVacancy::class);
+    }
 }
