@@ -122,8 +122,7 @@
                                                 role="tab" aria-selected="false">Lowongan Kerja</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                                href="#demographics" role="tab" aria-selected="false">Lamaran
+                                            <a class="nav-link {{ Route::is('applicant.application*') ? 'active' : '' }}" href="{{ route('applicant.application') }}" role="tab" aria-selected="false">Lamaran
                                                 Saya</a>
                                         </li>
                                         <li class="nav-item">

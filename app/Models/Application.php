@@ -15,6 +15,6 @@ class Application extends Model
     }
 
     public function job(){
-        return $this->belongsTo(JobVacancy::class);
+        return $this->belongsTo(JobVacancy::class,'job_vacancy_id');
     }
 }
