@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->hasMany(LanguageDetail::class);
     }
 
+    public function application(){
+        return $this->hasMany(Application::class);
+    }
+
     
 
     /**

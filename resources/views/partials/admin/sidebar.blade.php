@@ -36,13 +36,6 @@
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('admin.question') }}">
                     <i class="align-middle fas fa-clipboard-question"></i> <span
-                        class="align-middle">Application</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.question') }}">
-                    <i class="align-middle fas fa-clipboard-question"></i> <span
                         class="align-middle">Interview</span>
                 </a>
             </li>

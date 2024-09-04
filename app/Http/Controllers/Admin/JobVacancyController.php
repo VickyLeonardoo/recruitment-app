@@ -66,18 +66,61 @@ class JobVacancyController extends Controller
 
     }
 
-    public function edit(){
+    public function edit($id){
         $title = "Edit Job";
+        $job = JobVacancy::find($id);
 
         return view('admin.job.edit',[
             'title' => $title,
             'breadcrump' => Breadcrumbs::render($title),
+            'departements' => Departement::with('position')->get(),
+            'job' => $job,
         ]);
+    }
+
+    public function update(Request $request, $id){
+        $request->validate([
+            'code' => 'required|string',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'departement_id' => 'required|integer',
+            'requirement' => 'required|string',
+            'qualification' => 'required|string',
+            'position_id' => 'required|integer',
+            'type' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'min_salary' => 'required|integer',
+            'max_salary' => 'required|integer',
+        ]);
+
+        $data = [
+            'code' => $request->input('code'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'departement_id' => $request->input('departement_id'),
+            'requirement' => $request->input('requirement'),
+            'qualification' => $request->input('qualification'),
+            'position_id' => $request->input('position_id'),
+            'type' => $request->input('type'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'min_salary' => $request->input('min_salary'),
+            'max_salary' => $request->input('max_salary'),
+        ];
+        $job = JobVacancy::find($id);
+        $job->update($data);
+        return redirect()->route('admin.job')->with('success','Job updated successfully');
     }
 
     public function getPositions($deptId)
     {
         $positions = Position::where('departement_id', $deptId)->pluck('name', 'id');
         return response()->json($positions);
+    }
+
+    public function destroy($id){
+        JobVacancy::find($id)->delete();
+        return redirect()->route('admin.job')->with('success','Job deleted successfully');
     }
 }

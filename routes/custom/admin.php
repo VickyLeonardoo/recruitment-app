@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/job-vacancy/edit/{id}', 'edit')->name('admin.job.edit');
             Route::get('/get-positions/{deptId}','getPositions')->name('admin.job.get.position');
             // Route::get('/get-positions/{deptId}', [YourController::class, 'getPositions']);
+            Route::post('/job-vacancy/update/{id}', 'update')->name('admin.job.update');
+            Route::get('/job-vacancy/delete/{id}', 'destroy')->name('admin.job.delete');
 
 
         });

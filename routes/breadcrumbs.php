@@ -113,3 +113,10 @@ Breadcrumbs::for('Add Job', function (BreadcrumbTrail $trail) {
         $trail->push('Job List', route('admin.job'));
     }
 });
+
+Breadcrumbs::for('Edit Job', function (BreadcrumbTrail $trail) {
+    $trail->parent('Job vacancy');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Edit Job', route('admin.job'));
+    }
+});

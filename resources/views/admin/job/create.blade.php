@@ -7,7 +7,7 @@
     </nav>
     <div class="row">
         <div class="mb-3">
-            <a href="{{ route('admin.departement') }}" class="btn btn-primary"> <i class="fas fa-arrow-left"></i> Back</a>
+            <a href="{{ route('admin.job') }}" class="btn btn-primary"> <i class="fas fa-arrow-left"></i> Back</a>
         </div>
 
         <form action="{{ route('admin.job.store') }}" method="post">

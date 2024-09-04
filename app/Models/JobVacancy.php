@@ -17,4 +17,8 @@ class JobVacancy extends Model
     public function departement(){
         return $this->belongsTo(Departement::class);
     }
+
+    public function application(){
+        return $this->hasMany(Application::class);
+    }
 }

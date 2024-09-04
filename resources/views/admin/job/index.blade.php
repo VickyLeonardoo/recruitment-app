@@ -22,13 +22,13 @@
                         <thead>
                             <tr>
                                 <th>Code</th>
-                                <th>Title</th>
                                 <th>Departemen</th>
                                 <th>Position</th>
                                 <th>Type</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Status</th>
+                                <th>Applicant</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -36,18 +36,17 @@
                             @foreach ($jobs as $job)
                                 <tr>
                                     <td>{{ $job->code }}</td>
-                                    <td>{{ $job->title }}</td>
                                     <td>{{ $job->departement->name }}</td>
                                     <td>{{ $job->position->name }}</td>
                                     <td>{{ $job->type }}</td>
                                     <td>@formatDate($job->startDate)</td>
                                     <td>@formatDate($job->endDate)</td>
-                                    <td>{{ $job->status }}</td>
+                                    <td><a class="badge {{ $job->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $job->status == 1 ? 'Active' : 'Inactive' }}</a></td>
+                                    <td><a href="#" class="badge bg-info">{{ $job->application->count() }}</a></td>
                                     <td>
                                         <a href="{{ route('admin.job.edit',$job->id) }}" class="btn btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-danger">Delete</a>
+                                        <a href="{{ route('admin.job.delete',$job->id) }}" class="btn btn-danger">Delete</a>
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
