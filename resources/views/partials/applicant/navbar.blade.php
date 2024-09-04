@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="{{ asset('applicant') }}/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="{{ asset('applicant') }}/js/select.dataTables.min.css">
+    {{-- <link rel="stylesheet" href="{{ asset('applicant') }}/js/select.dataTables.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('applicant') }}/css/vertical-layout-light/style.css">
@@ -116,7 +118,7 @@
                                                 role="tab" aria-controls="overview" aria-selected="true">Profile</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences"
+                                            <a class="nav-link {{ Route::is('applicant.job*') ? 'active' : '' }}" href="{{ route('applicant.job') }}"
                                                 role="tab" aria-selected="false">Lowongan Kerja</a>
                                         </li>
                                         <li class="nav-item">
@@ -171,8 +173,22 @@
     <script src="{{ asset('applicant') }}/js/Chart.roundedBarCharts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
 
     @stack('js')
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+        });
+    </script>
     <script>
         $(function() {
             $('#datepicker').datepicker();

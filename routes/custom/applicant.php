@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Applicant\JobVacancyController;
 use App\Http\Controllers\Applicant\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,13 @@ Route::group(['middleware' => ['auth:user']],function(){
 
             Route::get('/profile/overview', 'overview')->name('applicant.profile.overview');
             Route::post('/profile/picture', 'updateProfilePicture')->name('applicant.profile.picture');
+        });
 
+        Route::controller(JobVacancyController::class)->group(function(){
+            Route::get('/job-vacancy', 'index')->name('applicant.job');
+            Route::get('/job-vacancy/{code}', 'detail')->name('applicant.job.detail');
+            Route::post('/job-vacancy/{id}/apply', 'applyJob')->name('applicant.job.apply');
+            
         });
     });
 });

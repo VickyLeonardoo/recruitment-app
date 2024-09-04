@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
+            $table->string('reg_no')->unique();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('job_vacancy_id')->references('id')->on('job_vacancies');
-            $table->date('reg_date');
-            $table->integer('status')->default(0);
+            $table->datetime('reg_date');
+            $table->enum('status',['Pending','Interview','Approved','Rejected']);
+            $table->boolean('is_mark')->default(false);
+            $table->boolean('is_recomended')->default(false);
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartementController;
@@ -58,8 +59,12 @@ Route::group(['middleware' => ['auth:staff']],function(){
             // Route::get('/get-positions/{deptId}', [YourController::class, 'getPositions']);
             Route::post('/job-vacancy/update/{id}', 'update')->name('admin.job.update');
             Route::get('/job-vacancy/delete/{id}', 'destroy')->name('admin.job.delete');
+        });
 
-
+        Route::controller(ApplicationController::class)->group(function(){
+            Route::get('/job-vacancy/{id}/application/', 'index')->name('admin.application');
+            Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
+            Route::get('/job-vacancy/{id}/application/result-test/{id_application}/', 'resultTest')->name('admin.application.result');
         });
     });
 });

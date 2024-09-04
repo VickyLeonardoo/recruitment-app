@@ -26,7 +26,7 @@
                 Menu
             </li>
 
-            <li class="sidebar-item {{ Route::is('admin.job*') ? 'active' : '' }}">
+            <li class="sidebar-item {{ Route::is('admin.job*','admin.application*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('admin.job') }}">
                     <i class="align-middle fas fa-clipboard-question"></i> <span
                         class="align-middle">Job Vacancy</span>

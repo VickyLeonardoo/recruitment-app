@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->string('position_id')->reference('id')->on('positions');
             $table->string('departement_id')->reference('id')->on('departements');
             $table->text('requirement');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('end_date');
             $table->integer('min_salary');
             $table->integer('max_salary');
-            $table->boolean('status')->default(true);
+            $table->enum('status',['Active','Inactive','Done','Cancelled'])->nullable();
             $table->boolean('is_archive')->default(false);
             $table->timestamps();
         });

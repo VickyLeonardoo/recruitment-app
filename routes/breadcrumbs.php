@@ -3,6 +3,7 @@
 // Note: Laravel will automatically resolve `Breadcrumbs::` without
 // this import. This is nice for IDE syntax and refactoring.
 use App\Models\Departement;
+use App\Models\JobVacancy;
 use App\Models\Position;
 // This import is also not required, and you could replace `BreadcrumbTrail $trail`
 //  with `$trail`. This is nice for IDE type checking and completion.
@@ -118,5 +119,34 @@ Breadcrumbs::for('Edit Job', function (BreadcrumbTrail $trail) {
     $trail->parent('Job vacancy');
     if (Auth::guard('staff')->user()->role_id == 1) {
         $trail->push('Edit Job', route('admin.job'));
+    }
+});
+
+Breadcrumbs::for('Application Name', function (BreadcrumbTrail $trail, $job) {
+    $trail->parent('Job vacancy');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push($job->code, route('admin.application',$job->id));
+    }
+});
+
+Breadcrumbs::for('Application List', function (BreadcrumbTrail $trail, $job) {
+    $trail->parent('Application Name', $job);
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Application List', route('admin.job'));
+    }
+});
+
+Breadcrumbs::for('Profile Applicant', function (BreadcrumbTrail $trail, $job) {
+    $trail->parent('Application Name', $job);
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Profile Applicant', route('admin.job'));
+    }
+});
+
+
+Breadcrumbs::for('Result Test', function (BreadcrumbTrail $trail, $job) {
+    $trail->parent('Application Name', $job);
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Result Test', route('admin.job'));
     }
 });
