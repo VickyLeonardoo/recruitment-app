@@ -17,13 +17,15 @@
                         </thead>
                         <tbody>
                             @foreach ($jobs as $job)
-                                <td>{{ $job->code }}</td>
-                                <td>{{ $job->departement->name }}</td>
-                                <td>{{ $job->position->name }}</td>
-                                <td>{{ $job->status }}</td>
-                                <td>
-                                    <a class="btn btn-secondary" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
-                                </td>
+                                <tr>
+                                    <td>{{ $job->code }}</td>
+                                    <td>{{ $job->departement->name }}</td>
+                                    <td>{{ $job->position->name }}</td>
+                                    <td>{{ $job->status }}</td>
+                                    <td>
+                                        <a class="btn btn-secondary" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

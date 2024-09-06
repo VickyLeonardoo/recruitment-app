@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string('test_no');
             $table->string('name');
             $table->foreignId('application_id')->references('id')->on('applications');
-            $table->datetime('test_date')->nullable();
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
-            $table->enum('status',['OPEN','INPROGRESS','COMPLETED'])->default('OPEN')->nullable();
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
+            $table->enum('status',['DRAFT','OPEN','COMPLETED'])->default('DRAFT');
             $table->string('result')->nullable();
+            $table->boolean('is_start');
+            $table->integer('duration');
             $table->timestamps();
         });
     }

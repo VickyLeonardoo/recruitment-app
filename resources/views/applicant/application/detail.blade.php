@@ -33,12 +33,11 @@
                     Jika anda baru saja menyelesaikan test &amp; statusnya belum berubah, silahkan click "Refresh Test List"
                     <br>
                 </div>
-                <div class="table-respon">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover dataTable no-footer" style="width: 100%;"
                         id="assTest-list-table" role="grid" aria-describedby="assTest-list-table_info">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Nomor Tes</th>
                                 <th>Nama Tes</th>
                                 <th>Status</th>
@@ -49,20 +48,33 @@
                         
                         <tbody>
                             <tr role="row" class="odd">
+                                <td class="sorting_1"><strong>{{ $apl->test->test_no }}</strong></td>
+                                <td><strong>{{ $apl->test->name }}</strong></td>
                                 <td>
-                                    <a href="" class="badge bg-success">{{ $apl->test->status }}</a>
+                                    <form method="POST">
+                                    @csrf
+                                    @if ($apl->test->status == 'DRAFT')
+                                    <input type="submit" formaction="{{ route('applicant.application.test.open', $apl->test->id) }}" value="OPEN" class="fw-bold btn mt-3 bg-info"/>
+                                    @elseif ($apl->test->status == 'OPEN')
+                                    <input type="submit" formaction="{{ route('applicant.application.test.index', $apl->test->id) }}" value="INCOMPLETE" class="fw-bold btn mt-3 bg-warning"/>
+                                    @else
+                                    <span class="badge bg-info text-dark"><strong>{{ $apl->test->status }}</strong></span>
+                                    @endif
+                                    </form>
                                 </td>
-                                <td class="sorting_1">1089045</td>
-                                <td>Basic External</td>
-                                <td><span class="badge bg-success  text-center text-dark">COMPLETED</span></td>
-                                <td><span class="badge bg-info text-dark">APP20240407805</span></td>
-                                <td>18/04/2024 12:09:57</td>
+                                <td><span class="badge bg-info text-dark"><strong>{{ $apl->reg_no }}</strong></span></td>
+                                <td style="font-weight: bold">
+                                    @if(is_null($apl->test->start_time))
+                                        BELUM DIMULAI
+                                    @else
+                                        {{ \Carbon\Carbon::parse($apl->test->start_time)->format('d/m/Y H:i:s') }}
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>
 
                 </div>
-                <hr>
                 <h3>Interview</h3>
                 <div class="table-resposive">
                     <table class="table table-hover table-bordered">

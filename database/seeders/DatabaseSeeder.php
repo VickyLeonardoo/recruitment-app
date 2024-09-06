@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\JobVacancy;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +28,9 @@ class DatabaseSeeder extends Seeder
             StaffSeeder::class, 
             UserSeeder::class,
             LanguageSeeder::class,
+            QuestionSeeder::class,
+            ChoiceSeeder::class,
+            JobVacancySeeder::class,
         ]);
     }
 }

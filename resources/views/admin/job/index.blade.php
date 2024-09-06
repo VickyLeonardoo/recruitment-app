@@ -41,7 +41,7 @@
                                     <td>{{ $job->type }}</td>
                                     <td>@formatDate($job->startDate)</td>
                                     <td>@formatDate($job->endDate)</td>
-                                    <td><a class="badge {{ $job->status == 1 ? 'bg-success' : 'bg-danger' }}">{{ $job->status == 1 ? 'Active' : 'Inactive' }}</a></td>
+                                    <td><a class="badge {{ $job->status == 'Active' ? 'bg-success' : 'bg-danger' }}">{{ $job->status == 'Active' ? 'Active' : 'Inactive' }}</a></td>
                                     <td><a href="{{ route('admin.application',$job->id) }}" class="badge bg-info">{{ $job->application->count() }}</a></td>
                                     <td>
                                         <a href="{{ route('admin.job.edit',$job->id) }}" class="btn btn-primary">Edit</a>

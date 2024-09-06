@@ -19,4 +19,8 @@ class Test extends Model
         return $this->belongsTo(Application::class);
     }
 
+    public function result(){
+        return $this->hasMany(TestResult::class);
+    }
+
 }

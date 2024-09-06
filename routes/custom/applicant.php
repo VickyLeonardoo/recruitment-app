@@ -3,6 +3,7 @@
 use App\Http\Controllers\Applicant\ApplicationController;
 use App\Http\Controllers\Applicant\JobVacancyController;
 use App\Http\Controllers\Applicant\ProfileController;
+use App\Http\Controllers\Applicant\TestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,5 +52,13 @@ Route::group(['middleware' => ['auth:user']],function(){
             Route::get('/application', 'index')->name('applicant.application');
             Route::get('/application/{id}', 'detail')->name('applicant.application.detail');
         });
+
+        Route::controller(TestController::class)->group(function(){
+            Route::post('/application/{id}/test/', 'startTest')->name('applicant.application.test.open');
+            Route::get('/application/{id}/test/', 'index')->name('applicant.application.test.index');
+            Route::post('/application/{id/test/submit', 'submitTest')->name('applicant.application.test.submit');
+        });
+
+        
     });
 });

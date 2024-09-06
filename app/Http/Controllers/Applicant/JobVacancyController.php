@@ -8,6 +8,7 @@ use App\Models\JobVacancy;
 use App\Models\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,9 +59,9 @@ class JobVacancyController extends Controller
             Test::create([
                 'test_no' => $newTestNumber,
                 'user_id' => Auth::guard('user')->id(),
-                'test_date' => now(),
-                'status' => 'OPEN',
+                'status' => 'DRAFT',
                 'name' => 'Basic External',
+                'duration' => '40',
                 'application_id' => $application->id,
             ]);
 
@@ -75,9 +76,11 @@ class JobVacancyController extends Controller
             DB::rollBack();
 
             // Log the error
-            \Log::error('Error in applyJob: ' . $e->getMessage());
+            Log::error('Error in applyJob: ' . $e->getMessage());
 
             return back()->with('error', 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.');
         }
     }
+
+    
 }

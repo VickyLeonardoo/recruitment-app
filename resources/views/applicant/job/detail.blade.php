@@ -6,7 +6,7 @@
             <div class="col-lg-4 col-12 border-end-desktop">
                 <div class="row">
                     <div class="col-12">
-                        <h3 class="font-heading text-muted">
+                        <h3 class="text-muted text-center">
                             {{ $job->departement->name }}
                         </h3>
                     </div>
