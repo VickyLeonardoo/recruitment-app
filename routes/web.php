@@ -24,9 +24,9 @@ Route::get('/home', function () {
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:88410626.
 });
 
+Route::get('/login',[LoginController::class, 'login'])->name('login');
 Route::get('/login',[LoginController::class, 'login'])->name('auth.login');
 Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.process.login');
 Route::get('/register',[RegisterController::class, 'register'])->name('auth.register');
 Route::post('/register',[RegisterController::class, 'processRegister'])->name('auth.process.register');
 Route::get('/logout',[LoginController::class, 'logout'])->name('auth.logout');
-

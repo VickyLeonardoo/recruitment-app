@@ -93,7 +93,12 @@
                                 <div class="alert alert-success text-dark" role="alert">
                                     {{ session('success') }}
                                 </div>
+                            @elseif (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{ session('error') }}</strong>.
+                                </div>
                             @endif
+                            
                             <ul class="navbar-nav">
                                 @if (!Auth::guard('user')->user()->user_detail)
                                     <div class="alert alert-warning" style="color: black" role="alert">

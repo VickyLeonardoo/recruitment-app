@@ -60,6 +60,7 @@ class JobVacancyController extends Controller
             'end_date' => $request->input('end_date'),
             'min_salary' => $request->input('min_salary'),
             'max_salary' => $request->input('max_salary'),
+            'status' => 'Active',
         ];
         $job = JobVacancy::create($data);
         return redirect()->route('admin.job')->with('success','Job created successfully');

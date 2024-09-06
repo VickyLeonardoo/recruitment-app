@@ -17,8 +17,12 @@ class ApplicationController extends Controller
     }
 
     public function detail($id){
+        $apl = Application::find($id);
+        if (!$apl){
+            return view('errors/404');
+        }
         return view('applicant.application.detail',[
-            'apl' => Application::find($id),
+            'apl' => $apl,
         ]);
     }
 }
