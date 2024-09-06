@@ -55,12 +55,12 @@
                                     @csrf
                                     @if ($apl->test->status == 'DRAFT')
                                     <input type="submit" formaction="{{ route('applicant.application.test.open', $apl->test->id) }}" value="OPEN" class="fw-bold btn mt-3 bg-info"/>
+                                    </form>
                                     @elseif ($apl->test->status == 'OPEN')
-                                    <input type="submit" formaction="{{ route('applicant.application.test.index', $apl->test->id) }}" value="INCOMPLETE" class="fw-bold btn mt-3 bg-warning"/>
+                                    <a type="submit" href="{{ route('applicant.application.test.index', $apl->test->id) }}" class="fw-bold btn mt-3 bg-warning">INCLOMPLETE</a>
                                     @else
                                     <span class="badge bg-info text-dark"><strong>{{ $apl->test->status }}</strong></span>
                                     @endif
-                                    </form>
                                 </td>
                                 <td><span class="badge bg-info text-dark"><strong>{{ $apl->reg_no }}</strong></span></td>
                                 <td style="font-weight: bold">

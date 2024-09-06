@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Test extends Model
 {
@@ -19,8 +20,8 @@ class Test extends Model
         return $this->belongsTo(Application::class);
     }
 
-    public function result(){
-        return $this->hasMany(TestResult::class);
+    public function test_result(){
+        return $this->hasMany(TestResult::class,'test_id','id');
     }
 
 }

@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth:user']],function(){
 
         Route::controller(TestController::class)->group(function(){
             Route::post('/application/{id}/test/', 'startTest')->name('applicant.application.test.open');
-            Route::get('/application/{id}/test/', 'index')->name('applicant.application.test.index');
+            Route::get('/application/{id}/test/', 'continueTest')->name('applicant.application.test.index');
             Route::post('/application/{id/test/submit', 'submitTest')->name('applicant.application.test.submit');
         });
 

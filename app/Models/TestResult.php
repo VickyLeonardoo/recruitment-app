@@ -15,7 +15,7 @@ class TestResult extends Model
     }
 
     public function question(){
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Question::class,'question_id');
     }
 
     public function choice(){

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('end_time')->nullable();
             $table->enum('status',['DRAFT','OPEN','COMPLETED'])->default('DRAFT');
             $table->string('result')->nullable();
-            $table->boolean('is_start');
+            $table->boolean('is_start')->default(false);
             $table->integer('duration');
             $table->timestamps();
         });
