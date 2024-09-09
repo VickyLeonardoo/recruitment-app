@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Applicant;
 
-use App\Http\Controllers\Controller;
-use App\Models\Question;
+use Carbon\Carbon;
 use App\Models\Test;
+use App\Models\Question;
 use App\Models\TestResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
@@ -56,9 +57,41 @@ class TestController extends Controller
         }
     }
 
-    public function continueTest($id){
-        return view ('applicant.application.test',[
-            'tests' => TestResult::where('test_id',$id)->with('question')->paginate(1),
+    public function continueTest($id)
+    {
+        $test = TestResult::where('test_id', $id)
+            ->with(['question.choices'])
+            ->get();
+
+        $select = $test[0];
+
+        // Pastikan start_time menggunakan timezone UTC
+        $startTime = Carbon::parse($select->test->start_time)->format('Y-m-d\TH:i:s\Z');
+
+        return view('applicant.application.test', [
+            'tests' => $test,
+            'start_time' => $startTime,
         ]);
+    }
+
+    public function saveAnswer(Request $request)
+    {
+        // Validasi data
+        $validated = $request->validate([
+            'question_id' => 'required|exists:questions,id',
+            'choice_id' => 'required|exists:choices,id',
+        ]);
+
+        // Cari atau buat test result untuk menyimpan jawaban
+        $testResult = TestResult::where('question_id', $request->question_id)
+                                ->where('test_id', $request->test_id) // pastikan test_id juga cocok
+                                ->firstOrFail();
+
+        // Simpan jawaban
+        $testResult->choice_id = $request->choice_id;
+        $testResult->save();
+
+        // Kembalikan response sukses
+        return response()->json(['success' => true]);
     }
 }

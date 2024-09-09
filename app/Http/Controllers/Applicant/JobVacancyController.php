@@ -23,13 +23,13 @@ class JobVacancyController extends Controller
 
     public function detail($code){
         $is_applied = false;
+        $job = JobVacancy::where('code',$code)->first();
 
-        $check = Application::where('user_id',Auth::guard('user')->user()->id)->where('job_vacancy_id',JobVacancy::where('code',$code)->first()->id)->first();
+        $check = Application::where('user_id',Auth::guard('user')->user()->id)->where('job_vacancy_id',$job->id)->first();
         if($check){
-            $is_applied = true;
+            $is_applied = $check;
         }
 
-        $job = JobVacancy::where('code',$code)->first();
         return view('applicant.job.detail',[
             'job' => $job,
             'is_applied' => $is_applied,

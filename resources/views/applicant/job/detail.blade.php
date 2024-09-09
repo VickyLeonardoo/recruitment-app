@@ -56,7 +56,7 @@
                 </div>
                 @else
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Kamu sudah mendaftar</strong>.
+                    <strong>Kamu sudah mendaftar. <a href="{{ route('applicant.application.detail',$is_applied->id) }}">Periksa disini!</a></strong>.
                 </div>
                 @endif
             </div>

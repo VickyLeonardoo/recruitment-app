@@ -23,7 +23,7 @@
                                     <td>{{ $job->position->name }}</td>
                                     <td>{{ $job->status }}</td>
                                     <td>
-                                        <a class="btn btn-secondary" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
+                                        <a class="btn btn-secondary mt-3" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -76,3 +76,35 @@
  .ui-datepicker-next,.ui-datepicker-prev {
    display:none;
  }
+
+ #question-numbers {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.question-box {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.question-box.answered {
+    background-color: #d4edda; /* Hijau muda */
+    color: #155724; /* Warna teks hijau */
+}
+
+.question-box:hover {
+    background-color: #e2e6ea;
+}
+
+#timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

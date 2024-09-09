@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth:user']],function(){
             Route::post('/application/{id}/test/', 'startTest')->name('applicant.application.test.open');
             Route::get('/application/{id}/test/', 'continueTest')->name('applicant.application.test.index');
             Route::post('/application/{id/test/submit', 'submitTest')->name('applicant.application.test.submit');
+            Route::post('/applicaiton/save-answer/','saveAnswer')->name('applicant.application.test.saveAnswer');
+
         });
 
         
