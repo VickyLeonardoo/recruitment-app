@@ -65,6 +65,10 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/job-vacancy/{id}/application/', 'index')->name('admin.application');
             Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
             Route::get('/job-vacancy/{id}/application/result-test/{id_application}/', 'resultTest')->name('admin.application.result');
+            Route::get('/application/{id}/rejected','setReject')->name('admin.application.reject');
+            Route::get('/application/{id}/accepted','setApproved')->name('admin.application.approved');
+            Route::get('/application/{id}/interview','setInterview')->name('admin.application.interview');
+            Route::get('/application/{id}/pending','setPending')->name('admin.application.[pending]');
         });
     });
 });

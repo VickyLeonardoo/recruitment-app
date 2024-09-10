@@ -58,10 +58,10 @@
                                             </button>
                                             @endif
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Reject</a></li>
-                                                <li><a class="dropdown-item" href="#">Pending</a></li>
-                                                <li><a class="dropdown-item" href="#">Approve</a></li>
-                                                <li><a class="dropdown-item" href="#">Interview</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.application.reject', $apl->id) }}">Reject</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.application.approved', $apl->id) }}">Pending</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.application.interview', $apl->id) }}">Approve</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('admin.application.interview', $apl->id) }}">Interview</a></li>
                                             </ul>
                                         </div>
                                     </th>

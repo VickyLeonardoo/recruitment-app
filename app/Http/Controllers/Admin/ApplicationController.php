@@ -72,4 +72,34 @@ class ApplicationController extends Controller
             'chart' => $chart->build($application),
         ]);
     }
+    
+    // Pending','Interview','Approved','Rejected
+
+    public function setPending($id){
+        $application = Application::find($id);
+        $application->status = 'Pending';
+        $application->save();
+        return redirect()->back()->with('success','Update successfully');
+    }
+
+    public function setReject($id){
+        $application = Application::find($id);
+        $application->status = 'Rejected';
+        $application->save();
+        return redirect()->back()->with('success','Update successfully');
+    }
+
+    public function setInterview($id){
+        $application = Application::find($id);
+        $application->status = 'Interview';
+        $application->save();
+        return redirect()->back()->with('success','Update successfully');
+}
+
+    public function setApproved($id){
+        $application = Application::find($id);
+        $application->status = 'Approved';
+        $application->save();
+        return redirect()->back()->with('success','Update successfully');
+    }
 }
