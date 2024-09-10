@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center" style="height: 252px;">
-                                    <h1 id="score" style="font-size: 6rem;">85</h1>
+                                    <h1 id="score" style="font-size: 6rem;">{{ $grade }}</h1>
                                 </div>
                             </div>
                         </div>
@@ -35,15 +35,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">Statistik Jawaban</h5>
-                                <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6>
+                                {{-- <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6> --}}
                             </div>
                             <div class="card-body">
                                 <div class="chart chart-sm">
-                                    <div class="chartjs-size-monitor">
-                                        <div class="chartjs-size-monitor-expand"><div class=""></div></div>
-                                        <div class="chartjs-size-monitor-shrink"><div class=""></div></div>
-                                    </div>
-                                    <canvas id="chartjs-pie" style="display: block; width: 723px; height: 252px;" width="723" height="252" class="chartjs-render-monitor"></canvas>
+                                    {!! $chart->container() !!}
                                 </div>
                             </div>
                         </div>
@@ -56,6 +52,10 @@
     
 @endsection
 @push('js')
+<script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Pie chart
@@ -99,6 +99,6 @@
     }
     
     // Example usage:
-    updateScoreColor(85);
+    updateScoreColor({{ $grade }});
     </script>
 @endpush

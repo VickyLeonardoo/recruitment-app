@@ -59,9 +59,14 @@ class TestController extends Controller
 
     public function continueTest($id)
     {
+        $testFind = Test::find($id);
         $test = TestResult::where('test_id', $id)
             ->with(['question.choices'])
             ->get();
+
+        if ($testFind->status == 'COMPLETED') {
+            return redirect()->back()->with('error', 'Test sudah selesai, kamu tidak dapat melanjutkan');
+        }
 
         $select = $test[0];
 
@@ -89,9 +94,40 @@ class TestController extends Controller
 
         // Simpan jawaban
         $testResult->choice_id = $request->choice_id;
+        $testResult->is_correct = $this->checkAnswer($request->question_id, $request->choice_id);
         $testResult->save();
 
         // Kembalikan response sukses
         return response()->json(['success' => true]);
+    }
+
+    private function checkAnswer($questionId, $choiceId)
+    {
+        // Implementasikan logika untuk memeriksa jawaban dan mengembalikan hasilnya
+        $question = Question::find($questionId);
+        if (!$question) {
+            return false; // Jika pertanyaan tidak ditemukan, return false
+        }
+        $choice = $question->choices->where('id', $choiceId)->first();
+
+        // Periksa apakah pilihan ditemukan dan is_correct adalah true
+        if ($choice && $choice->is_correct) {
+            return true; // Jawaban benar
+        }
+    
+        return false; // Jawaban salah
+    }
+
+    public function submitApplication($id)
+    {
+        $test = Test::find($id);
+        if (!$test->end_time) {
+            // Jika belum, set waktu mulai dan status tes
+            $test->end_time = now();
+            $test->status = 'COMPLETED';  // Gunakan assignment '=' bukan '=='
+            $test->save();
+        }
+        
+        return redirect()->route('applicant.application.detail',$test->application->id)->with('success','Tes telah selesai!');
     }
 }

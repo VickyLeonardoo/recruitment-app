@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth:user']],function(){
             Route::get('/application/{id}/test/', 'continueTest')->name('applicant.application.test.index');
             Route::post('/application/{id/test/submit', 'submitTest')->name('applicant.application.test.submit');
             Route::post('/applicaiton/save-answer/','saveAnswer')->name('applicant.application.test.saveAnswer');
+            Route::post('/application/test/{id}/','submitApplication')->name('applicant.application.submit');
 
         });
 

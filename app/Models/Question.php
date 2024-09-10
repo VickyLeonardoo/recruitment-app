@@ -43,4 +43,8 @@ class Question extends Model
         return $this->hasMany(Choice::class);
     }
 
+    public function test_result(){
+        return $this->hasMany(TestResult::class,'question_id','id');
+    }
+
 }

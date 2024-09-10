@@ -27,6 +27,14 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="form-group">
+                    <form action="{{ route('applicant.application.submit', $test->test_id) }}" method="POST">
+                        @csrf
+                        <div class="col-lg-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary text-white">Submit Jawaban</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

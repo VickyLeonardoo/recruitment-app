@@ -59,7 +59,7 @@
                                     @elseif ($apl->test->status == 'OPEN')
                                     <a type="submit" href="{{ route('applicant.application.test.index', $apl->test->id) }}" class="fw-bold btn mt-3 bg-warning">INCLOMPLETE</a>
                                     @else
-                                    <span class="badge bg-info text-dark"><strong>{{ $apl->test->status }}</strong></span>
+                                    <span class="badge bg-success text-dark"><strong>{{ $apl->test->status }}</strong></span>
                                     @endif
                                 </td>
                                 <td><span class="badge bg-info text-dark"><strong>{{ $apl->reg_no }}</strong></span></td>
@@ -73,8 +73,12 @@
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
+                @if ($apl->test->status == 'COMPLETED')
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        <strong>Terima Kasih telah mengikuti test assessment ini. Selanjutnya kami akan review lamaran kamu, dan akan mengupdate status nya </strong>.
+                    </div>
+                    @endif
                 <h3>Interview</h3>
                 <div class="table-resposive">
                     <table class="table table-hover table-bordered">
