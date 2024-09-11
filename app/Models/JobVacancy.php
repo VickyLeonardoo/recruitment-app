@@ -21,4 +21,8 @@ class JobVacancy extends Model
     public function application(){
         return $this->hasMany(Application::class);
     }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
+    }
 }

@@ -1,6 +1,5 @@
 @extends('partials.admin.header')
 @section('content')
-    
     <div class="row">
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

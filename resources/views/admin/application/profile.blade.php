@@ -1,6 +1,12 @@
 @extends('partials.admin.header')
 @section('content')
+
     <div class="row">
+        @if ($apl->is_recomended == 1)
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Recommendation!</strong>.
+        </div>
+        @endif
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> {{ session('success') }}.
@@ -35,7 +41,7 @@
                                                 <p class="register-label">Email</p>
                                                 <p class="mb-3">{{ $user->email }}</p>
                                                 <p class="register-label">Tanggal Lahir</p>
-                                                <p class="mb-3">
+                                                <p class="mb-3"> 
                                                     {{ Carbon\Carbon::parse($user->user_detail->dob)->format('d M Y') }}
                                                     ({{ \Carbon\Carbon::parse($user->user_detail->dob)->age }} Tahun)
                                                 </p>
@@ -172,7 +178,46 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
+    <h1 class="h3 mb-0"><strong>TEST RESULT</strong></h1>
+    <div class="row mt-3">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Score</h5>
+                    <h6 class="card-subtitle text-muted">Your current score is displayed below.</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 252px;">
+                        <h1 id="score" style="font-size: 6rem;">{{ $grade }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Statistik Jawaban</h5>
+                    {{-- <h6 class="card-subtitle text-muted">Pie charts are excellent at showing the relational proportions between data.</h6> --}}
+                </div>
+                <div class="card-body">
+                    <div class="chart chart-sm">
+                        {!! $chart->container() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="{{ route('admin.application.recomendation', $apl->id) }}">
+            @csrf
+            <button type="submit" class="btn {{ $apl->is_recomended == '0' ? 'btn-primary' : 'btn-danger' }}"></i>{{ $apl->is_recomended == '0' ? 'Recommendation':'Cancel Recommendation' }}</button>
+        </form>
+    </div>
 @endsection
+@push('js')
+<script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
+@endpush

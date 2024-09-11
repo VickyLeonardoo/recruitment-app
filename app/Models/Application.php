@@ -21,4 +21,8 @@ class Application extends Model
     public function test(){
         return $this->hasOne(Test::class);
     }
+
+    public function schedule(){
+        return $this->hasOne(ScheduleLine::class);
+    }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('status',['Pending','Interview','Approved','Rejected']);
             $table->boolean('is_mark')->default(false);
             $table->boolean('is_recomended')->default(false);
+            $table->boolean('is_interview')->default(false);
             $table->timestamps();
         });
     }

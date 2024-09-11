@@ -168,6 +168,19 @@
                     [10, 25, 50, "All"]
                 ],
             });
+
+            $('#application').DataTable({
+                "responsive": true,
+                "autoWidth": false,
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                "columnDefs": [{
+                    "targets": 0,  // Disable sorting for the first column (index 0)
+                    "orderable": false
+                }],
+            });
         });
     </script>
     <script>

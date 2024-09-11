@@ -12,7 +12,16 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 class ApplicationController extends Controller
 {
     public function index($id){
-        $job = JobVacancy::find($id);
+        $job = JobVacancy::with([
+            'application.user' => function ($query) {
+                $query->with([
+                    'user_detail',
+                    'education_details', 
+                    'skill_details',
+                ]);
+            }
+        ])->find($id);
+        // $job = JobVacancy::find($id);
         $title = "Application List";
         return view('admin.application.index',[
             'title' => $title,
@@ -21,7 +30,7 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function profileApplicant($id, $id_app) {
+    public function profileApplicant($id, $id_app, MonthlyUsersChart $chart) {
         $title = "Profile Applicant";
     
         // Eager load semua relasi yang diperlukan
@@ -40,11 +49,32 @@ class ApplicationController extends Controller
     
         // Ambil user dari application
         $user = $application->user;
-    
+
+        $answer = $application->test->test_result;
+        $correctAnswer = 0;
+
+        // Check if there are answers before processing
+        if ($answer && $answer->count() > 0) {
+            foreach ($answer as $ans) {
+                if ($ans->is_correct) {
+                    $correctAnswer++;
+                }
+            }
+            
+            // Calculate the final grade if there are answers
+            $finalGrade = ($correctAnswer / $answer->count()) * 100;
+        } else {
+            // If no answers, set final grade to 0
+            $finalGrade = 0;
+        }
+
         return view('admin.application.profile', [
             'user' => $user,
             'title' => $title,
             'breadcrump' => Breadcrumbs::render($title, $job),
+            'grade' => $finalGrade,
+            'chart' => $chart->build($application),
+            'apl' => $application
         ]);
     }
 
@@ -101,5 +131,30 @@ class ApplicationController extends Controller
         $application->status = 'Approved';
         $application->save();
         return redirect()->back()->with('success','Update successfully');
+    }
+
+    public function setRecomendation($id){
+        $application = Application::find($id);
+        if ($application->is_recomended == true) {
+            $application->is_recomended = false;
+        }else{
+            $application->is_recomended = true;
+        }
+        $application->save();
+        return redirect()->back()->with('success','Update successfully');
+    }
+
+    public function setMark($ids) {
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        Application::whereIn('id', $applicationIds)->update(['is_mark' => true]);
+    
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
+    
+    public function setUnmark($ids) {
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        Application::whereIn('id', $applicationIds)->update(['is_mark' => false]);
+    
+        return redirect()->back()->with('success', 'Applications marked successfully');
     }
 }

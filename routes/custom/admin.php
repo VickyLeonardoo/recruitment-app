@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DepartementController;
+use App\Http\Controllers\Admin\InterviewController;
 use App\Http\Controllers\Admin\JobVacancyController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\QuestionController;
@@ -68,7 +69,15 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/application/{id}/rejected','setReject')->name('admin.application.reject');
             Route::get('/application/{id}/accepted','setApproved')->name('admin.application.approved');
             Route::get('/application/{id}/interview','setInterview')->name('admin.application.interview');
-            Route::get('/application/{id}/pending','setPending')->name('admin.application.[pending]');
+            Route::get('/application/{id}/pending','setPending')->name('admin.application.pending');
+            Route::get('/application/{id}/recomendation','setRecomendation')->name('admin.application.recomendation');
+            Route::get('/application/{id}/mark','setMark')->name('admin.application.mark');
+            Route::get('/application/{id}/unmark','setUnmark')->name('admin.application.unmark');
+        });
+
+        Route::controller(InterviewController::class)->group(function(){
+            Route::get('/interview', 'index')->name('admin.interview');
+            
         });
     });
 });

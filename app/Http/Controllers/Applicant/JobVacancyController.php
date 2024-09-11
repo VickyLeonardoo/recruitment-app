@@ -38,6 +38,12 @@ class JobVacancyController extends Controller
 
     public function applyJob($id)
     {
+        $checkAppliation = Application::where('user_id',Auth::guard('user')->id())->latest()->first();
+        if (in_array($checkAppliation->status, ['Pending'])) {
+            return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
+        }
+
+        return 'testl';
         try {
             // Start the transaction
             DB::beginTransaction();

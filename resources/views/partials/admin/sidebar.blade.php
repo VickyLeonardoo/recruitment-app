@@ -34,7 +34,7 @@
             </li>
             
             <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('admin.question') }}">
+                <a class="sidebar-link" href="{{ route('admin.interview') }}">
                     <i class="align-middle fas fa-clipboard-question"></i> <span
                         class="align-middle">Interview</span>
                 </a>

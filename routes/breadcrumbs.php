@@ -23,6 +23,12 @@ Breadcrumbs::for('Departement', function (BreadcrumbTrail $trail) {
     }
 });
 
+Breadcrumbs::for('Interview', function (BreadcrumbTrail $trail) {
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Interview', route('admin.interview'));
+    }
+});
+
 Breadcrumbs::for('Departement List', function (BreadcrumbTrail $trail) {
     $trail->parent('Departement');
     if (Auth::guard('staff')->user()->role_id == 1) {
@@ -148,5 +154,12 @@ Breadcrumbs::for('Result Test', function (BreadcrumbTrail $trail, $job) {
     $trail->parent('Application Name', $job);
     if (Auth::guard('staff')->user()->role_id == 1) {
         $trail->push('Result Test', route('admin.job'));
+    }
+});
+
+Breadcrumbs::for('Interview List', function (BreadcrumbTrail $trail) {
+    $trail->parent('Interview');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Interview List', route('admin.interview'));
     }
 });
