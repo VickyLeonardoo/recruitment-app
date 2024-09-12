@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth:staff']],function(){
 
         Route::controller(InterviewController::class)->group(function(){
             Route::get('/interview', 'index')->name('admin.interview');
+            Route::get('/interview/create', 'create')->name('admin.interview.create');
+            Route::post('/interview/create', 'store')->name('admin.interview.store');
             
         });
     });

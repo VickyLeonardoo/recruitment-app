@@ -163,3 +163,10 @@ Breadcrumbs::for('Interview List', function (BreadcrumbTrail $trail) {
         $trail->push('Interview List', route('admin.interview'));
     }
 });
+
+Breadcrumbs::for('Add Schedule', function (BreadcrumbTrail $trail) {
+    $trail->parent('Interview');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Add Schedule', route('admin.departement'));
+    }
+});

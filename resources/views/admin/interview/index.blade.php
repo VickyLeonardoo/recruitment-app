@@ -14,7 +14,7 @@
     @endif
     <div class="card">
         <div class="card-header">
-            <a href="{{ route('admin.departement.create') }}" class="btn btn-primary">Add Data</a>
+            <a href="{{ route('admin.interview.create') }}" class="btn btn-primary">Add Data</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
