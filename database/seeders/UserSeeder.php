@@ -20,6 +20,20 @@ class UserSeeder extends Seeder
                 'role_id' => '4',
                 'is_verified' => true,
                 'is_active' => true,
+            ],
+            [
+                'email' => 'user2@example.com',
+                'password' => bcrypt('123'),
+                'role_id' => '4',
+                'is_verified' => true,
+                'is_active' => true,
+            ],
+            [
+                'email' => 'user3@example.com',
+                'password' => bcrypt('123'),
+                'role_id' => '4',
+                'is_verified' => true,
+                'is_active' => true,
             ]
         ];
         DB::table('users')->insert($user);

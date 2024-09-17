@@ -157,4 +157,18 @@ class ApplicationController extends Controller
     
         return redirect()->back()->with('success', 'Applications marked successfully');
     }
+
+    public function setMassInterview($ids){
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        Application::whereIn('id', $applicationIds)->update(['status' => 'Interview']);
+
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
+
+    public function setMassReject($ids){
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        Application::whereIn('id', $applicationIds)->update(['status' => 'Rejected']);
+
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
 }

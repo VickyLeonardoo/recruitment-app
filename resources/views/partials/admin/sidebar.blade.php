@@ -33,7 +33,7 @@
                 </a>
             </li>
             
-            <li class="sidebar-item">
+            <li class="sidebar-item {{ Route::is('admin.interview*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('admin.interview') }}">
                     <i class="align-middle fas fa-clipboard-question"></i> <span
                         class="align-middle">Interview</span>

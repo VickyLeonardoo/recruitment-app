@@ -145,24 +145,6 @@
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('applicant.profile.picture') }}" method="post" enctype="multipart/form-data"
-                                    class="mb-3">
-                                    @csrf
-                                    <div class="form-group mb-3">
-                                        <input type="file" name="profile_picture" class="onlybottom" id="fileInput"
-                                            accept="image/png, image/gif, image/jpeg">
-                                        @error('profile_picture')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group mb-3">
-            
-                                        <button type="submit" class="btn btn-outline-danger btn-icon-text">
-                                            <i class="ti-upload btn-icon-prepend"></i>
-                                            Upload
-                                        </button>
-                                    </div>
-                                </form>
                                 <div class="text-center">
                                     @if ($user->user_detail)
                                         @if ($user->user_detail->profile_picture)

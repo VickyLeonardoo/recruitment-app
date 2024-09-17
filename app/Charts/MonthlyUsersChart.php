@@ -15,18 +15,19 @@ class MonthlyUsersChart
 
     public function build($application): \ArielMejiaDev\LarapexCharts\PieChart
     {
-        
-        $question = $application->test->test_result->where('is_correct','1');
+        // Eager load test_result bersama dengan question untuk mengurangi query
+        $application->load('test.test_result.question');
+
+        $question = $application->test->test_result->where('is_correct', 1);
         $question_count_easy = $question->pluck('question')->where('difficult', 'Easy')->count();
         $question_count_medium = $question->pluck('question')->where('difficult', 'Medium')->count();
         $question_count_hard = $question->pluck('question')->where('difficult', 'Hard')->count();
-        
+
         // Gunakan data untuk membangun chart
         return $this->chart->pieChart()
             ->setTitle('Difficulties of Answers')
-            ->addData([$question_count_easy,$question_count_medium,$question_count_hard])
-            ->setLabels(['Mudah','Sedang','Sulit'])
+            ->addData([$question_count_easy, $question_count_medium, $question_count_hard])
+            ->setLabels(['Mudah', 'Sedang', 'Sulit'])
             ->setHeight(260);
-
     }
 }

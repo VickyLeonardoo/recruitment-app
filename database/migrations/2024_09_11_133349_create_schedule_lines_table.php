@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('schedule_id')->references('id')->on('schedules');
             $table->foreignId('application_id')->references('id')->on('applications');
-            $table->enum('result',['Approved','Rejected']);
+            $table->enum('result',['Pending','Approved','Rejected']);
+            $table->boolean('is_mark')->default(false);
+            $table->boolean('is_email')->default(false);
             $table->timestamps();
         });
     }

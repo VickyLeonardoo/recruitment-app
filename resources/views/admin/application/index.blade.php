@@ -15,11 +15,18 @@
         <div class="card">
             <div class="card-header">
                 {{-- <a href="{{ route('admin.job.create') }}" class="btn btn-primary">Add Data</a> --}}
-            </div>
+            </div> 
             <div class="card-body">
-                <div class="mb-3">
-                    <button class="btn btn-success" onclick="markSelected()">MARK</button>
-                    <button class="btn btn-warning" onclick="unmarkSelected()">UNMARK</button>
+                <div class="mb-3 d-flex justify-content-between">
+                    <div>
+                        <button class="btn btn-primary" onclick="markSelected()">MARK</button>
+                        <button class="btn btn-warning" onclick="unmarkSelected()">UNMARK</button>
+                        <button class="btn btn-success" onclick="interviewSelected()">INTERVIEW</button>
+
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="rejectSelected()">Reject</button>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="application" width="100%">
@@ -110,16 +117,22 @@
     function markSelected() {
         var selected = [];
         document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
-            selected.push(checkbox.value); // assuming checkbox value is application ID
+            selected.push(checkbox.value); // asumsikan value checkbox adalah application ID
         });
-        
+
         if (selected.length > 0) {
-            // Redirect to the named route with selected IDs as query parameters
+            // Redirect ke route yang ditentukan dengan query parameters
             var url = "{{ route('admin.application.mark', ':ids') }}";
             url = url.replace(':ids', selected.join(','));
             window.location.href = url;
         } else {
-            alert('No applications selected');
+            // Menampilkan SweetAlert jika tidak ada aplikasi yang dipilih
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
         }
     }
 
@@ -135,7 +148,69 @@
             url = url.replace(':ids', selected.join(','));
             window.location.href = url;
         } else {
-            alert('No applications selected');
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    function interviewSelected(){
+        var selected = [];
+        document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+            selected.push(checkbox.value); // assuming checkbox value is application ID
+        });
+        
+        if (selected.length > 0) {
+            // Redirect to the named route with selected IDs as query parameters
+            var url = "{{ route('admin.application.mass.interview', ':ids') }}";
+            url = url.replace(':ids', selected.join(','));
+            window.location.href = url;
+        } else {
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    function rejectSelected() {
+        var selected = [];
+        document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+            selected.push(checkbox.value); // asumsikan value checkbox adalah application ID
+        });
+
+        if (selected.length > 0) {
+            // Tampilkan SweetAlert untuk konfirmasi
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Reject it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika dikonfirmasi, redirect ke route Laravel
+                    var url = "{{ route('admin.application.mass.reject', ':ids') }}";
+                    url = url.replace(':ids', selected.join(','));
+                    window.location.href = url;
+                }
+            });
+        } else {
+            // Menampilkan SweetAlert jika tidak ada aplikasi yang dipilih
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
         }
     }
 </script>

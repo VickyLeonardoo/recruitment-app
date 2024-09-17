@@ -170,3 +170,26 @@ Breadcrumbs::for('Add Schedule', function (BreadcrumbTrail $trail) {
         $trail->push('Add Schedule', route('admin.departement'));
     }
 });
+
+Breadcrumbs::for('Edit Schedule', function (BreadcrumbTrail $trail) {
+    $trail->parent('Interview');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Edit Schedule', route('admin.departement'));
+    }
+});
+
+Breadcrumbs::for('Applicant List', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('Interview');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Applicant List', route('admin.interview.applicant',$id));
+    }
+});
+
+Breadcrumbs::for('Applicant Profile', function (BreadcrumbTrail $trail, $apl,$id) {
+    $trail->parent('Applicant List',$id);
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push($apl->reg_no, route('admin.interview.applicant',$apl->id));
+    }
+});
+
+

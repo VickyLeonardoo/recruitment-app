@@ -73,13 +73,29 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/application/{id}/recomendation','setRecomendation')->name('admin.application.recomendation');
             Route::get('/application/{id}/mark','setMark')->name('admin.application.mark');
             Route::get('/application/{id}/unmark','setUnmark')->name('admin.application.unmark');
+            Route::get('/application/{id}/interview/mass','setMassInterview')->name('admin.application.mass.interview');
+            Route::get('/application/{id}/reject/mass','setMassReject')->name('admin.application.mass.reject');
+
         });
 
         Route::controller(InterviewController::class)->group(function(){
             Route::get('/interview', 'index')->name('admin.interview');
             Route::get('/interview/create', 'create')->name('admin.interview.create');
             Route::post('/interview/create', 'store')->name('admin.interview.store');
-            
+            Route::get('/interview/edit/{id}', 'edit')->name('admin.interview.edit');
+            Route::POST('/interview/update/{id}', 'update')->name('admin.interview.update');
+            Route::get('/interview/delete/{id}', 'destroy')->name('admin.interview.destroy');
+
+            Route::get('/interview/{id}/applicant', 'applicantList')->name('admin.interview.applicant');
+            Route::get('/interview/{id}/generate/applicant','generateApplicant')->name('admin.interview.generate.applicant');
+            Route::get('/interview/{id}/applicant/{id_apl}/detail', 'applicantDetail')->name('admin.interview.applicant.detail');
+
+            Route::get('/interview/{id}/applicant/sentMail', 'sentMail')->name('admin.interview.applicant.mail');
+            Route::get('/interview/{id}/applicant/reject', 'rejectLine')->name('admin.interview.applicant.reject');
+
+            // Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
+
+
         });
     });
 });

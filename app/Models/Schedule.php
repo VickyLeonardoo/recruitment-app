@@ -12,7 +12,7 @@ class Schedule extends Model
     protected $guarded = ['id'];
 
     public function job(){
-        return $this->belongsTo(JobVacancy::class);
+        return $this->belongsTo(JobVacancy::class,'job_vacancy_id');
     }
 
     public function line(){
