@@ -18,8 +18,11 @@
                 <div>
                     <a href="{{ route('admin.interview.generate.applicant',$schedule->id) }}" class="btn btn-secondary">Generate List</a>
                     <a href="{{ route('admin.interview.applicant.mail',$schedule->id) }}" class="ml-3 btn btn-primary"><i class="fas fa-envelope"></i> Sent Mail</a>
+                    <button class="btn btn-info" onclick="markSelected()"><i class="fa-solid fa-marker"></i> MARK</button>
+                    <button class="btn btn-warning" onclick="unmarkSelected()">UNMARK</button>
                 </div>
                 <div>
+                    <a onclick="approveSelected()" class="ml-3 btn btn-success">Approve</a>
                     <a onclick="rejectSelected()" class="ml-3 btn btn-danger">Reject</a>
                 </div>
             </div>
@@ -34,7 +37,7 @@
                             <th>Name</th>
                             <th class="text-center">Marked</th>
                             <th class="text-center">Mailed</th>
-                            <th>Status</th>
+                            <th>Result</th>
                             <th></th> 
                         </tr>
                     </thead>
@@ -44,7 +47,7 @@
                                 <td><input type="checkbox" class="application-checkbox" value="{{ $ln->id }}" style="transform: scale(1.5);"></td>
                                 <td>{{ $ln->application->reg_no }}</td>
                                 <td>{{ $ln->application->user->user_detail->full_name }}</td>
-                                <td class="text-center"><input type="checkbox" onclick="return false" {{ $ln->is_marked == true ? 'checked':'' }} style="transform: scale(1.5);"></td>
+                                <td class="text-center"><input type="checkbox" onclick="return false" {{ $ln->is_mark == true ? 'checked':'' }} style="transform: scale(1.5);"></td>
                                 <td class="text-center">
                                     <input type="checkbox"  onclick="return false" {{ $ln->is_email == true ? 'checked':'' }} style="transform: scale(1.5);">
                                 </td>
@@ -91,6 +94,71 @@
             window.location.href = url;
         } else {
             // Menampilkan SweetAlert jika tidak ada aplikasi yang dipilih
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    function approveSelected() {
+        var selected = [];
+        document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+            selected.push(checkbox.value); // asumsikan value checkbox adalah application ID
+        });
+
+        if (selected.length > 0) {
+            // Redirect ke route yang ditentukan dengan query parameters
+            var url = "{{ route('admin.interview.applicant.approve', ':ids') }}";
+            url = url.replace(':ids', selected.join(','));
+            window.location.href = url;
+        } else {
+            // Menampilkan SweetAlert jika tidak ada aplikasi yang dipilih
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    function markSelected() {
+        var selected = [];
+        document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+            selected.push(checkbox.value); // asumsikan value checkbox adalah application ID
+        });
+
+        if (selected.length > 0) {
+            // Redirect ke route yang ditentukan dengan query parameters
+            var url = "{{ route('admin.interview.applicant.mark', ':ids') }}";
+            url = url.replace(':ids', selected.join(','));
+            window.location.href = url;
+        } else {
+            // Menampilkan SweetAlert jika tidak ada aplikasi yang dipilih
+            Swal.fire({
+                title: 'No Application Selected',
+                text: 'Choose at least one application to perform this action.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    function unmarkSelected() {
+        var selected = [];
+        document.querySelectorAll('input[type="checkbox"].application-checkbox:checked').forEach(function(checkbox) {
+            selected.push(checkbox.value); // assuming checkbox value is application ID
+        });
+        
+        if (selected.length > 0) {
+            // Redirect to the named route with selected IDs as query parameters
+            var url = "{{ route('admin.interview.applicant.unmark', ':ids') }}";
+            url = url.replace(':ids', selected.join(','));
+            window.location.href = url;
+        } else {
             Swal.fire({
                 title: 'No Application Selected',
                 text: 'Choose at least one application to perform this action.',

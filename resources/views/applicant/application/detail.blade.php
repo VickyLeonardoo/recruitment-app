@@ -74,22 +74,52 @@
                         </tbody>
                     </table>
                 </div>
-                @if ($apl->test->status == 'COMPLETED')
+                @if ($apl->test->status == 'COMPLETED' && $apl->status == 'Pending')
                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                         <strong>Terima Kasih telah mengikuti test assessment ini. Selanjutnya kami akan review lamaran kamu, dan akan mengupdate status nya </strong>.
                     </div>
-                    @endif
+                @elseif($apl->status == 'Approved')
+                    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        <strong class="text-dark">Selamat, anda telah diterima sebagai pegawai perusahaan ini. Silahkan tunggu email kami untuk informasi lebih lanjut.</strong> <br>
+                        <strong class="text-danger">Anda dapat mengabaikan pesan ini jika sudah menerima email kami.</strong>.
+                    </div>
+                @elseif ($apl->status == 'Rejected')
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                        <strong class="text-dark"> Terima kasih telah tertarik berkarir di PT McDermott. Dari hasil review kami, profil Anda masih belum sesuai dengan profil yang kami butuhkan di posisi yang Anda lamar. <br>
+                            Anda dapat melamar kembali pada posisi lain yang sesuai dengan minat Anda. <br>
+                            Berikut beberapa hal yang dapat Anda lakukan selama masa pencarian kerja: <br>
+                            1. Latihan interview kerja."Practice makes perfect" tetap lakukan latihan interview kerja supaya Anda lebih rileks dan siap saat menghadapi interview kerja yang sesungguhnya. <br>
+                            2. Cari tahu terkait perusahaan yang Anda lamar. ini dapat membantu Anda. <br>
+                            3. Perbaharui CV Anda secara berkala dan sesuaikan dengan posisi yang akan Anda lamar. <br>
+                            4. Apabila diperlukan, Anda dapat mengambil kelas pelatihan agar kemampuan Anda dapat meningkat dan terasah. <br>
+                            Kami berharap yang terbaik untuk karir Anda di masa depan. <br>
+                            </strong> <br>
+
+                            {{ $apl->schedule->schedule->date }}
+                    </div>
+                @endif
                 <h3>Interview</h3>
                 <div class="table-resposive">
                     <table class="table table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>Schedule</th>
+                                <th>Date</th>
                                 <th>Interview Place</th>
-                                <th>Realized On</th>
+                                <th>Time On</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($apl->schedule)
+                                <tr>
+                                    <td>@onlyDate($apl->schedule->schedule->date)</td>
+                                    <td>Jl. Bawal No.1, Batu Merah, Kec. Batu Ampar, Kota Batam, Kepulauan Riau 29452</td>
+                                    <td>@formatTime($apl->schedule->schedule->start_time) - @formatTime($apl->schedule->schedule->end_time)</td>
+                                </tr>
+                            @else
+                            <tr>
+                                <td colspan="3">Tidak ada jadwal interview</td>
+                            </tr>                   
+                            @endif
                         </tbody>
                     </table>
                 </div>

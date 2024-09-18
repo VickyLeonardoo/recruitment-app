@@ -33,7 +33,7 @@
     referrerpolicy="no-referrer"
   />
     <style>
-        #loader {
+        #loader { 
             position: fixed;
             top: 0;
             left: 0;
@@ -169,6 +169,16 @@
     <script src="{{ asset('template') }}/js/app.js"></script>
     
     @stack('js')
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
     <script>
         $(document).ready(function() {
             $('#example').DataTable({

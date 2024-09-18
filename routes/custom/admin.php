@@ -92,6 +92,14 @@ Route::group(['middleware' => ['auth:staff']],function(){
 
             Route::get('/interview/{id}/applicant/sentMail', 'sentMail')->name('admin.interview.applicant.mail');
             Route::get('/interview/{id}/applicant/reject', 'rejectLine')->name('admin.interview.applicant.reject');
+            Route::get('/interview/{id}/applicant/approve', 'approveLine')->name('admin.interview.applicant.approve');
+            Route::get('/interview/{id}/applicant/mark', 'markLine')->name('admin.interview.applicant.mark');
+            Route::get('/interview/{id}/applicant/unmark', 'unmarkLine')->name('admin.interview.applicant.unmark');
+
+            Route::get('/interview/{id}/set/upcoming','setUpcoming')->name('admin.interview.set.upcoming');
+            Route::get('/interview/{id}/set/done','setDone')->name('admin.interview.set.done');
+            Route::get('/interview/{id}/set/cancelled','setCancelled')->name('admin.interview.set.cancelled');
+            Route::get('/interview/{id}/set/draft','setDraft')->name('admin.interview.set.draft');
 
             // Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
 

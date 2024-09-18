@@ -102,8 +102,36 @@ class InterviewController extends Controller
     }
 
     public function destroy($id){
+        $schedule = Schedule::find($id);
+        if ($schedule->line) {
+            return redirect()->back()->with('error','Schedule has lines, cannot delete');
+        }
         Schedule::find($id)->delete();
         return redirect(route('admin.interview'))->with('success','Success delete schedule');
+    }
+
+    public function setUpcoming($id){
+        $schedule = Schedule::find($id);
+        $schedule->update(['status' => 'Upcoming']);
+        return redirect(route('admin.interview'))->with('success','Success update schedule');
+    }
+
+    public function setDone($id){
+        $schedule = Schedule::find($id);
+        $schedule->update(['status' => 'Done']);
+        return redirect(route('admin.interview'))->with('success','Success update schedule');
+    }
+
+    public function setCancelled($id){
+        $schedule = Schedule::find($id);
+        $schedule->update(['status' => 'Cancelled']);
+        return redirect(route('admin.interview'))->with('success','Success update schedule');
+    }
+
+    public function setDraft($id){
+        $schedule = Schedule::find($id);
+        $schedule->update(['status' => 'Draft']);
+        return redirect(route('admin.interview'))->with('success','Success update schedule');
     }
 
     public function applicantList($id){
@@ -219,4 +247,39 @@ class InterviewController extends Controller
 
         return redirect()->back()->with('success', 'Applications marked successfully');
     }
+
+    public function approveLine($ids)
+    {
+        $lineIds = explode(',', $ids); // Get array of IDs
+
+        // Update result status for all lines
+        ScheduleLine::whereIn('id', $lineIds)->update(['result' => 'Approved']);
+
+        // Update status for related applications in bulk
+        $applicationIds = ScheduleLine::whereIn('id', $lineIds)
+                                    ->pluck('application_id')
+                                    ->unique(); // Get unique application IDs
+
+        // Update status for all applications
+        Application::whereIn('id', $applicationIds)->update(['status' => 'Approved']);
+
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
+
+    public function markLine($ids) {
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        return $applicationIds;
+        ScheduleLine::whereIn('id', $applicationIds)->update(['is_mark' => true]);
+    
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
+
+    public function unmarkLine($ids) {
+        $applicationIds = explode(',', $ids); // Get array of IDs
+        ScheduleLine::whereIn('id', $applicationIds)->update(['is_mark' => false]);
+    
+        return redirect()->back()->with('success', 'Applications marked successfully');
+    }
+
+    
 }
