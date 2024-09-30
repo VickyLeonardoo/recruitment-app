@@ -69,13 +69,14 @@
 										</div> --}}
 										<div class="d-grid gap-2 mt-3">
                                             <input type="submit" class="btn btn-lg btn-primary" value="Sign in">
+											<a href="{{ route('auth.reset') }}">Forgot Password</a>
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 						<div class="text-center mb-3">
-							Don't have an account? <a href="{{ route('auth.register') }}">Sign up</a>
+							Don't have an account? <a href="{{ route('auth.register') }}">Sign up</a> <br>
 						</div>
 					</div>
 				</div>

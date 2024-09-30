@@ -31,5 +31,7 @@ Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.proce
 Route::get('/register',[RegisterController::class, 'register'])->name('auth.register');
 Route::post('/register',[RegisterController::class, 'processRegister'])->name('auth.process.register');
 Route::get('/logout',[LoginController::class, 'logout'])->name('auth.logout');
+Route::get('/reset/password/',[ResetPasswordController::class, 'index'])->name('auth.reset');
+Route::post('/reset/password/',[ResetPasswordController::class, 'store'])->name('auth.reset.store');
 Route::get('/reset/password/{token}',[ResetPasswordController::class, 'resetPassword'])->name('auth.reset.password');
 Route::post('/reset/password/{token}',[ResetPasswordController::class, 'processResetPassword'])->name('auth.process.reset.password');
