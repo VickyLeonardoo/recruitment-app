@@ -54,6 +54,18 @@
     outline: 0;
 }
 
+.form-register:disabled {
+    opacity: 0.6;
+    background-color: #f8f8f8;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Opsional: Jika Anda ingin mengubah warna border bawah saat disabled */
+.form-register:disabled {
+    border-bottom-color: #cccccc !important;
+}
+
 .register-label{
     font-weight: bolder;
     font-size: 1rem;

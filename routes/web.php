@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,3 +31,5 @@ Route::post('/login',[LoginController::class, 'processLogin'])->name('auth.proce
 Route::get('/register',[RegisterController::class, 'register'])->name('auth.register');
 Route::post('/register',[RegisterController::class, 'processRegister'])->name('auth.process.register');
 Route::get('/logout',[LoginController::class, 'logout'])->name('auth.logout');
+Route::get('/reset/password/{token}',[ResetPasswordController::class, 'resetPassword'])->name('auth.reset.password');
+Route::post('/reset/password/{token}',[ResetPasswordController::class, 'processResetPassword'])->name('auth.process.reset.password');

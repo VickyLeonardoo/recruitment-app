@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://8000-idx-recruitment-app-1723089168321.cluster-a3grjzek65cxex762e4mwrzl46.cloudworkstations.dev'),
 
     'asset_url' => env('ASSET_URL'),
 

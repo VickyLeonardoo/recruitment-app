@@ -11,10 +11,10 @@
                         class="align-middle">Dashboard</span>
                 </a>
             </li>
+            @role('Admin')
             <li class="sidebar-header">
                 Master Data
             </li>
-
             <li class="sidebar-item {{ Route::is('admin.departement*','admin.position*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('admin.departement') }}">
                     <i class="align-middle fas fa-building"></i> 
@@ -22,6 +22,15 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ Route::is('admin.account*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('admin.account') }}">
+                    <i class="align-middle fas fa-user"></i> 
+                    <span class="align-middle">Account</span>
+                </a>
+            </li>
+            @endrole
+
+            @hasanyrole('HR|Admin|Manager')
             <li class="sidebar-header">
                 Menu
             </li>
@@ -39,7 +48,9 @@
                         class="align-middle">Interview</span>
                 </a>
             </li>
+            @endhasanyrole
 
+            @role('Admin')
             <li class="sidebar-header">
                 Configuration
             </li>
@@ -50,6 +61,7 @@
                         class="align-middle">Question</span>
                 </a>
             </li>
+            @endrole
         </ul>
     </div>
 </nav>

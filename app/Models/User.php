@@ -31,7 +31,7 @@ class User extends Authenticatable
     }
 
     public function role(){
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class,);
     }
 
     public function education_details(){
@@ -53,6 +53,11 @@ class User extends Authenticatable
     public function application(){
         return $this->hasMany(Application::class);
     }
+
+    public function token(){
+        return $this->hasOne(ResetPassword::class);
+    }
+
 
     
 

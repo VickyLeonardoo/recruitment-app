@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\ApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
@@ -9,13 +10,13 @@ use App\Http\Controllers\Admin\JobVacancyController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\QuestionController;
 
+
+
 Route::group(['middleware' => ['auth:staff']],function(){
+    Route::controller(DashboardController::class)->group(function(){
+        Route::get('/', 'index')->name('admin.dashboard');
+    });
     Route::group(['middleware' => ['cek_login:1']],function(){
-
-        Route::controller(DashboardController::class)->group(function(){
-            Route::get('/', 'index')->name('admin.dashboard');
-        });
-
         //Departement Controller - Mengatur Departement Controller
         Route::controller(DepartementController::class)->group(function(){
             Route::get('/departement', 'index')->name('admin.departement'); //Menampilkan Index
@@ -24,6 +25,16 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::post('/departement/store', 'store')->name('admin.departement.store'); //Menambahkan data
             Route::post('/departement/update/{id}', 'update')->name('admin.departement.update'); //Mengupdate data
             Route::get('/departement/delete/{id}', 'destroy')->name('admin.departement.delete'); //Menghapus data
+        });
+
+        //Account for Manager or HRD
+        Route::controller(AccountController::class)->group(function(){
+            Route::get('/account','index')->name('admin.account');
+            Route::get('/account/create','create')->name('admin.account.create');
+            Route::post('/account/create','store')->name('admin.account.store');
+            Route::get('/account/{slug}/edit', 'edit')->name('admin.account.edit');
+            Route::post('/account/{id}/update' ,'update')->name('admin.account.update');
+            Route::get('/account/{id}/delete', 'destroy')->name('admin.account.delete');
         });
 
         //Position Controller - Mengatur Position Controller
@@ -50,6 +61,9 @@ Route::group(['middleware' => ['auth:staff']],function(){
 
             Route::get('/question/answer/delete/{id}', 'deleteAnswer')->name('admin.choice.delete');
         });
+    });
+
+    Route::group(['middleware' => ['cek_login:1,2,3']],function(){
 
         Route::controller(JobVacancyController::class)->group(function(){
             Route::get('/job-vacancy', 'index')->name('admin.job');
@@ -61,7 +75,6 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::post('/job-vacancy/update/{id}', 'update')->name('admin.job.update');
             Route::get('/job-vacancy/delete/{id}', 'destroy')->name('admin.job.delete');
         });
-
         Route::controller(ApplicationController::class)->group(function(){
             Route::get('/job-vacancy/{id}/application/', 'index')->name('admin.application');
             Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
@@ -85,25 +98,26 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/interview/edit/{id}', 'edit')->name('admin.interview.edit');
             Route::POST('/interview/update/{id}', 'update')->name('admin.interview.update');
             Route::get('/interview/delete/{id}', 'destroy')->name('admin.interview.destroy');
-
+    
             Route::get('/interview/{id}/applicant', 'applicantList')->name('admin.interview.applicant');
             Route::get('/interview/{id}/generate/applicant','generateApplicant')->name('admin.interview.generate.applicant');
             Route::get('/interview/{id}/applicant/{id_apl}/detail', 'applicantDetail')->name('admin.interview.applicant.detail');
-
+    
             Route::get('/interview/{id}/applicant/sentMail', 'sentMail')->name('admin.interview.applicant.mail');
             Route::get('/interview/{id}/applicant/reject', 'rejectLine')->name('admin.interview.applicant.reject');
             Route::get('/interview/{id}/applicant/approve', 'approveLine')->name('admin.interview.applicant.approve');
             Route::get('/interview/{id}/applicant/mark', 'markLine')->name('admin.interview.applicant.mark');
             Route::get('/interview/{id}/applicant/unmark', 'unmarkLine')->name('admin.interview.applicant.unmark');
-
+    
             Route::get('/interview/{id}/set/upcoming','setUpcoming')->name('admin.interview.set.upcoming');
             Route::get('/interview/{id}/set/done','setDone')->name('admin.interview.set.done');
             Route::get('/interview/{id}/set/cancelled','setCancelled')->name('admin.interview.set.cancelled');
             Route::get('/interview/{id}/set/draft','setDraft')->name('admin.interview.set.draft');
+    });
+        
 
-            // Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
+        // Route::get('/job-vacancy/{id}/application/profile-applicant/{id_application}/', 'profileApplicant')->name('admin.application.profile');
 
 
-        });
     });
 });

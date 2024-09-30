@@ -34,6 +34,20 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('onlyDate', function ($expression) {
             return "<?php echo Carbon\Carbon::parse($expression)->format('d M Y'); ?>";
         });
+
+        Blade::if('role', function ($role) {
+            return auth()->check() && auth()->user()->role->name == $role;
+        });
+
+        Blade::if('hasanyrole', function ($roles) {
+            if (auth()->check()) {
+                $userRole = auth()->user()->role->name; // Asumsi 'role' adalah relasi ke model role
+                $roles = is_array($roles) ? $roles : explode('|', $roles); // Konversi string menjadi array jika diperlukan
+                return in_array($userRole, $roles);
+            }
+            return false;
+        });
+
         Paginator::useBootstrapFive();
 
     }

@@ -1,9 +1,9 @@
 @extends('partials.admin.header')
 @section('content')
 <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
+        {{-- <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="#">{{ Breadcrumbs::render('Add Departement') }}</a></li>
-        </ol>
+        </ol> --}}
     </nav>
     <div class="row">
         <div class="mb-3">

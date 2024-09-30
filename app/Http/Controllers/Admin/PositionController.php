@@ -79,4 +79,12 @@ class PositionController extends Controller
         return redirect()->back()->with('success','Position deleted successfully');
 
     }
+
+    public function getPositions($departementId){
+        $positions = Position::where('departement_id', $departementId)->get();
+
+        return response()->json([
+            'positions' => $positions
+        ]);
+    }
 }

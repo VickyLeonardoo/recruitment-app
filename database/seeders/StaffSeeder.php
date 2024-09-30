@@ -21,6 +21,7 @@ class StaffSeeder extends Seeder
                 'position_id' => 1,
                 'is_active' => true,
                 'role_id' => '1',
+                'departement_id' => 1
             ],
             [
                 'name' => 'Staff',
@@ -29,6 +30,7 @@ class StaffSeeder extends Seeder
                 'position_id' => 6,
                 'is_active' => true,
                 'role_id' => '2',
+                'departement_id' => 1
             ],
             [
                 'name' => 'Staff',
@@ -37,6 +39,7 @@ class StaffSeeder extends Seeder
                 'position_id' => 6,
                 'is_active' => true,
                 'role_id' => '3',
+                'departement_id' => 3
             ]
         ];
 

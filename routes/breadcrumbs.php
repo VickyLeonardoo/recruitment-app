@@ -193,3 +193,30 @@ Breadcrumbs::for('Applicant Profile', function (BreadcrumbTrail $trail, $apl,$id
 });
 
 
+// Home > Deparement
+Breadcrumbs::for('Account', function (BreadcrumbTrail $trail) {
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Account', route('admin.account'));
+    }
+});
+
+Breadcrumbs::for('Account List', function (BreadcrumbTrail $trail) {
+    $trail->parent('Account');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Account List', route('admin.account'));
+    }
+});
+
+Breadcrumbs::for('Add Account', function (BreadcrumbTrail $trail) {
+    $trail->parent('Account');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Add Acount', route('admin.account.create'));
+    }
+});
+
+Breadcrumbs::for('Edit Account', function (BreadcrumbTrail $trail, $staff) {
+    $trail->parent('Account');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push($staff->name, route('admin.account.edit',$staff->id));
+    }
+});

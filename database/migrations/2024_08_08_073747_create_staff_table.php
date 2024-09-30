@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->foreignId('departement_id')->references('id')->on('departements');
             $table->foreignId('position_id')->references('id')->on('positions');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(false);
             $table->foreignId('role_id')->references('id')->on('roles');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
