@@ -85,7 +85,7 @@
                     </div>
                 @elseif ($apl->status == 'Rejected')
                     <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <strong class="text-dark"> Terima kasih telah tertarik berkarir di PT McDermott. Dari hasil review kami, profil Anda masih belum sesuai dengan profil yang kami butuhkan di posisi yang Anda lamar. <br>
+                        <strong class="text-dark"> Terima kasih telah tertarik berkarir di PT XYZ. Dari hasil review kami, profil Anda masih belum sesuai dengan profil yang kami butuhkan di posisi yang Anda lamar. <br>
                             Anda dapat melamar kembali pada posisi lain yang sesuai dengan minat Anda. <br>
                             Berikut beberapa hal yang dapat Anda lakukan selama masa pencarian kerja: <br>
                             1. Latihan interview kerja."Practice makes perfect" tetap lakukan latihan interview kerja supaya Anda lebih rileks dan siap saat menghadapi interview kerja yang sesungguhnya. <br>

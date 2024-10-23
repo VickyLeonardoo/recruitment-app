@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::get('/account/{slug}/edit', 'edit')->name('admin.account.edit');
             Route::post('/account/{id}/update' ,'update')->name('admin.account.update');
             Route::get('/account/{id}/delete', 'destroy')->name('admin.account.delete');
+            Route::post('/account/{id}/update/status', 'updateStatus')->name('admin.account.update.status');
         });
 
         //Position Controller - Mengatur Position Controller

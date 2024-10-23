@@ -49,7 +49,7 @@
     <div class="alert-custom alert-custom-danger" role="alert">
         <p style="color: black">
             <i class="mdi mdi-alert" style="color: red"></i> <strong>
-                McDermott tidak memungut biaya apapun selama proses pendaftaran dan seleksi karir berlangsung.
+                PT XYZ tidak memungut biaya apapun selama proses pendaftaran dan seleksi karir berlangsung.
             </strong>
         </p>
     </div>

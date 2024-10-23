@@ -18,7 +18,7 @@ class AccountController extends Controller
         $title = 'Account List';
         return view('admin.account.index',[
             'title' => $title,
-            'staffs' => Staff::orderBy('role_id','desc')->with('role')->with('position.departement')->get(),
+            'staffs' => Staff::orderBy('role_id','desc')->with('role')->with('departement')->get(),
             'breadcrump' => Breadcrumbs::render($title)
         ]);
     }
@@ -85,6 +85,13 @@ class AccountController extends Controller
         ]);
 
         $staff->update($data);
+        return redirect()->route('admin.account')->with('success', 'Success Update Account');
+    }
+
+    public function updateStatus($id){
+        $staff = Staff::find($id);
+        $staff->is_active = ($staff->is_active == 0) ? 1 : 0;
+        $staff->save();
         return redirect()->route('admin.account')->with('success', 'Success Update Account');
     }
 

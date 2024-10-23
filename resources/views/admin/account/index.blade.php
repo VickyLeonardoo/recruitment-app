@@ -36,7 +36,13 @@
                                     <td>{{ $staff->email }}</td>
                                     <td>{{ $staff->departement->name }}</td>
                                     <td>{{ $staff->role->name }}</td>
-                                    <td><a href="" class="badge {{ $staff->is_active == 0 ? 'bg-dager':'bg-success' }}">{{ $staff->is_active == 0 ? 'Inacitve':'Active' }}</a></td>
+                                    <td>
+                                        <form action="{{ route('admin.account.update.status',$staff->id) }}" method="POST">
+                                            @csrf
+                                            <input type="submit" value="{{ $staff->is_active == 0 ? 'Inacitve':'Active' }}" class="btn btn-sm {{ $staff->is_active == 0 ? 'btn-danger':'btn-success' }}" name="status">
+                                        </form>
+                                        {{-- <a href="" class="badge {{ $staff->is_active == 0 ? 'bg-dager':'bg-success' }}">{{ $staff->is_active == 0 ? 'Inacitve':'Active' }}</a> --}}
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.account.edit',$staff->id) }}" class="text-white btn bg-info">Edit</a>
                                         <a href="{{ route('admin.account.delete',$staff->id) }}" class="text-white btn bg-danger">Delete</a>

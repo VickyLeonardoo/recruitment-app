@@ -17,13 +17,16 @@ class Cek_login
     public function handle($request, Closure $next, ...$roles)
     {
         if (!auth::check()) { 
-            return redirect('login')->with('message','Kamu Belum Login');
+            return redirect('auth.login')->with('error','You don\'t have permission to access this page!');
         }
         $user = Auth::user();
 
         if (in_array($user->role_id, $roles)) {
+            if ($user->is_active == 0) {
+                return redirect()->route('auth.login')->with('error','Your account is not active');
+            }
             return $next($request); 
         }
-        return redirect('login')->with('message','Kamu Tidak Punya Akses, Silahkan Login terlebih dahulu!');
+        return redirect('auth.login')->with('error','You don\'t have permission to access this page!');
     }
 }
