@@ -91,7 +91,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#"
                                 data-bs-toggle="dropdown">
-                                <span class="text-dark">Charles Hall</span>
+                                <span class="text-dark">{{ Auth::guard('staff')->user()->email }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1 fas fa-user"></i> Profile</a>
