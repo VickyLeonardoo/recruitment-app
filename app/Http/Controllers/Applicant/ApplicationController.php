@@ -14,7 +14,7 @@ class ApplicationController extends Controller
         return view('applicant.application.index',[
             'apps' => $apps
         ]);
-    }
+    } 
 
     public function detail($id){
         $apl = Application::find($id);
