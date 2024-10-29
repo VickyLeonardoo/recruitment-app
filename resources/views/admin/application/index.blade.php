@@ -91,7 +91,7 @@
                                         <input type="checkbox" {{ $apl->is_mark ? 'checked' : '' }} style="transform: scale(1.5);">
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.application.profile', [1, 1]) }}"
+                                        <a href="{{ route('admin.application.profile', [$jobs->id, $apl->id]) }}"
                                             class="btn btn-primary">Detail Applicant</a>
                                     </td>
                                 </tr>

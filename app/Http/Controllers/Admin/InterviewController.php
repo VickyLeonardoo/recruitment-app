@@ -268,7 +268,7 @@ class InterviewController extends Controller
 
     public function markLine($ids) {
         $applicationIds = explode(',', $ids); // Get array of IDs
-        return $applicationIds;
+       
         ScheduleLine::whereIn('id', $applicationIds)->update(['is_mark' => true]);
     
         return redirect()->back()->with('success', 'Applications marked successfully');
