@@ -10,6 +10,7 @@ use App\Models\ScheduleLine;
 use Illuminate\Http\Request;
 use App\Charts\MonthlyUsersChart;
 use App\Http\Controllers\Controller;
+use App\Mail\SentInterviewMail;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Facades\Mail;
 
@@ -219,15 +220,19 @@ class InterviewController extends Controller
             $query->where('is_email', false)->with('application.user');
         }])->find($id);
 
-        // Ambil semua email dari setiap line->application->user yang is_mail = false
-        $emails = $schedule->line->pluck('application.user.email')->unique();
+        // Ambil semua user dari setiap line->application
+        $users = $schedule->line->pluck('application.user')->unique();
+
+        // Jika kamu hanya ingin mendapatkan email
+        $emails = $users->pluck('email')->unique();
         // Proses pengiriman email hanya untuk yang is_mail = false
-        foreach ($emails as $email) {
-            // Mail::to($email)->send(new YourMailable());
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new SentInterviewMail($schedule,$user));
         }
 
         // Update is_mail menjadi true hanya untuk line yang is_mail = false
         $schedule->line()->where('is_email', false)->update(['is_email' => true]);
+        return redirect()->back()->with('success','Success send email');
     }
 
     public function rejectLine($ids)
