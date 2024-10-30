@@ -64,16 +64,9 @@
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="" alt="Profile image"> </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                            <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="" alt="Profile image">
-                                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                                <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
-                            </div>
                             <a href="{{ route('auth.logout') }}" class="dropdown-item"><i
                                     class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Keluar</a>
-                        </div>
+                        
                     </li>
                 </ul>
 
@@ -131,8 +124,7 @@
                                                 Saya</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab"
-                                                href="#more" role="tab" aria-selected="false">Hubungi Kami</a>
+                                            <a class="nav-link {{ Route::is('applicant.password*') ? 'active':''}} border-0"  href="{{ route('applicant.password') }}" role="tab" aria-selected="false">Password</a>
                                         </li>
                                     </ul>
                                 </div>

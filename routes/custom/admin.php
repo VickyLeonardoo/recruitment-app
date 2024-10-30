@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth:staff']],function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/', 'index')->name('admin.dashboard');
     });
+
     Route::group(['middleware' => ['cek_login:1']],function(){
         //Departement Controller - Mengatur Departement Controller
         Route::controller(DepartementController::class)->group(function(){
@@ -36,6 +37,7 @@ Route::group(['middleware' => ['auth:staff']],function(){
             Route::post('/account/{id}/update' ,'update')->name('admin.account.update');
             Route::get('/account/{id}/delete', 'destroy')->name('admin.account.delete');
             Route::post('/account/{id}/update/status', 'updateStatus')->name('admin.account.update.status');
+
         });
 
         //Position Controller - Mengatur Position Controller
@@ -66,6 +68,12 @@ Route::group(['middleware' => ['auth:staff']],function(){
 
     Route::group(['middleware' => ['cek_login:1,2,3']],function(){
 
+        Route::controller(AccountController::class)->group(function(){
+            Route::get('/account/password', 'show')->name('admin.account.show.password');
+            Route::post('/account/password', 'updatePassword')->name('admin.account.update.password');
+
+        });
+ 
         Route::controller(JobVacancyController::class)->group(function(){
             Route::get('/job-vacancy', 'index')->name('admin.job');
             Route::get('/job-vacancy/create', 'create')->name('admin.job.create');

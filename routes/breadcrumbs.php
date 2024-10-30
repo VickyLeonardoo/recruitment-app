@@ -220,3 +220,11 @@ Breadcrumbs::for('Edit Account', function (BreadcrumbTrail $trail, $staff) {
         $trail->push($staff->name, route('admin.account.edit',$staff->id));
     }
 });
+
+Breadcrumbs::for('Change Password', function (BreadcrumbTrail $trail) {
+    $trail->parent('Account');
+    if (Auth::guard('staff')->user()->role_id == 1) {
+        $trail->push('Change Password', route('admin.account'));
+    }
+});
+

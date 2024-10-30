@@ -16,7 +16,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-    <title>Sign In | AdminKit Demo</title>
+    <title>Sign Up | Recruitment App</title>
 
     <link href="{{ asset('template') }}/css/app.css" rel="stylesheet">
     <link href="{{ asset('custom') }}/style.css" rel="stylesheet">
@@ -25,6 +25,7 @@
     {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {{-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" /> --}}
@@ -109,7 +110,7 @@
                                         <div class="col-lg-6">
 											<div class="mb-3">
 												<label class="register-label">Tanggal Lahir</label>
-												<input type="text" class="form-register datepicker" name="dob"
+												<input type="date" class="form-register " name="dob"
 													placeholder="Masukkan tanggal lahir" id="datepicker" value="{{ old('dob') }}" aria-describedby="basic-addon1" />
 												@error('dob')
 													<p class="text-danger">{{ $message }}</p>
@@ -167,11 +168,7 @@
     </main>
 
     <script src="js/app.js"></script>
-    <script>
-       $(function() {
-			$("#datepickerYear").datepicker();
-		});
-    </script>
+   
     </head>
 </body>
 

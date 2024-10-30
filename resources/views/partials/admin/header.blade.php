@@ -85,7 +85,6 @@
                 <a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>
-
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
                         <li class="nav-item dropdown">
@@ -94,7 +93,7 @@
                                 <span class="text-dark">{{ Auth::guard('staff')->user()->email }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1 fas fa-user"></i> Profile</a>
+                                <a class="dropdown-item" href="{{ route('admin.account.show.password') }}"><i class="align-middle me-1 fas fa-key"></i> Password</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('auth.logout') }}">Log out</a>
                             </div>

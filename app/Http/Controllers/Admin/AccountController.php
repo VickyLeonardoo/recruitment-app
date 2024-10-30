@@ -6,11 +6,12 @@ use App\Models\Staff;
 use App\Models\Position;
 use App\Models\Departement;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Mail\ResetPasswordMail;
 use App\Models\ResetPassword;
-use Diglactic\Breadcrumbs\Breadcrumbs;
+use App\Mail\ResetPasswordMail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Diglactic\Breadcrumbs\Breadcrumbs;
 
 class AccountController extends Controller
 {
@@ -98,6 +99,26 @@ class AccountController extends Controller
     public function destroy($id){
         Staff::where('id', $id)->delete();
         return redirect()->route('admin.account')->with('success', 'Success Delete Account');
+    }
+
+    public function show(){
+        $title = 'Change Password';
+        return view('admin.password.show',[
+            'title' => 'Change Password',
+            'breadcrump' => Breadcrumbs::render($title),
+        ]);
+    }
+
+    public function updatePassword(Request $request){
+        $request->validate([
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        $user = Auth::guard('staff')->user();
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return redirect()->back()->with('success','Success Update Password');
     }
 
 }

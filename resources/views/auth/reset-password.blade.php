@@ -16,7 +16,7 @@
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/pages-sign-in.html" />
 
-    <title>Sign In | AdminKit Demo</title>
+    <title>Reset Password | Recruitment App</title>
 
     <link href="{{ asset('template') }}/css/app.css" rel="stylesheet">
     <link href="{{ asset('custom') }}/style.css" rel="stylesheet">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Applicant\ApplicationController;
 use App\Http\Controllers\Applicant\JobVacancyController;
+use App\Http\Controllers\Applicant\PasswordController;
 use App\Http\Controllers\Applicant\ProfileController;
 use App\Http\Controllers\Applicant\TestController;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +11,15 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:user']],function(){
     Route::group(['middleware' => ['cek_login:4']],function(){
         
+        Route::controller(PasswordController::class)->group(function(){
+            Route::get('/password', 'index')->name('applicant.password');
+            Route::post('/password/update', 'update')->name('applicant.password.update');
+
+        });
+
         Route::controller(ProfileController::class)->group(function(){
+
+
             Route::get('/profile', 'index')->name('applicant.profile.info');
             Route::post('/profile/edit', 'updateInfo')->name('applicant.profile.info.update');
             
