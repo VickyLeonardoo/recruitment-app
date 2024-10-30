@@ -35,9 +35,8 @@ class ProfileController extends Controller
             'phone' => 'required|string|unique:user_details,phone,' . ($user->user_detail->id ?? 'NULL'),
             'religion' => 'required|string',
             'status' => 'required|string',
-            'nationality' => 'required|string',
+            'nationality' => 'required',
         ]);
-    
         // Hitung usia berdasarkan tanggal lahir
         $age = Carbon::parse($request->dob)->age;
     

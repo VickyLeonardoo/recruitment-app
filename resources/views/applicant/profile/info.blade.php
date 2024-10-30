@@ -116,8 +116,8 @@
                     <div class="form-group mb-3">
                         <label for="">Kewarganegaraan</label>
                         <select name="nationality" class="onlybottom">
-                            <option value="Singapore">Indonesia</option>
-                            <option value="Indonesia">Singapore</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Singapore">Singapore</option>
                         </select>
                         @error('nationality')
                             <p class="text-danger">{{ $message }}</p>
@@ -186,10 +186,10 @@
                         <select name="nationality" class="onlybottom">
                             <option value="Singapore"
                                 {{ Auth::guard('user')->user()->user_detail->nationality == 'Singapore' ? 'selected' : '' }}>
-                                Indonesia</option>
+                                Singapore</option>
                             <option value="Indonesia"
                                 {{ Auth::guard('user')->user()->user_detail->nationality == 'Indonesia' ? 'selected' : '' }}>
-                                Singapore</option>
+                                Indonesia</option>
                         </select>
                         @error('nationality')
                             <p class="text-danger">{{ $message }}</p>

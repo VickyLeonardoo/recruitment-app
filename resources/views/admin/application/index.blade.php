@@ -31,7 +31,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped" id="application" width="100%">
                         <thead>
-                            <tr>
+                            <tr> 
                                 <th><input type="checkbox" style="transform: scale(1.5);" onclick="toggleCheckboxes(this)"></th>
                                 <th>Name</th>
                                 <th>Reg Date</th>
