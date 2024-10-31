@@ -76,9 +76,9 @@
         
                                     <div class="form-group mb-3">
                                         <label for="" class="register-label">Max Salary</label>
-                                        <input type="number" class="form-control {{ $errors->has('max_salary') ? 'is-invalid' : '' }}"
-                                            id="floatingMaxSalary" name="max_salary" placeholder="">
-                                        @error('max_salary')
+                                        <input type="number" class="form-control {{ $errors->has('max_pax') ? 'is-invalid' : '' }}"
+                                            id="floatingMaxSalary" name="max_pax" placeholder="">
+                                        @error('max_pax')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="" class="register-label">Qualification</label>
-                                        <textarea name="qualification" class="form-control" {{ $errors->has('qualification') ? 'is-invalid' : '' }} placeholder="Qualification" rows="7"></textarea>
+                                        <textarea name="qualification" class="form-control" {{ $errors->has('qualification') ? 'is-invalid' : '' }} placeholder="Qualification" rows="5"></textarea>
                                         @error('qualification')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -130,7 +130,15 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
-        
+
+                                    <div class="form-group mb-3">
+                                        <label for="" class="register-label">Max Applicant</label>
+                                        <input type="number" class="form-control {{ $errors->has('max_salary') ? 'is-invalid' : '' }}"
+                                            id="floatingMaxSalary" name="max_salary" placeholder="">
+                                        @error('max_salary')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                    
                                 </div>
                             </div>

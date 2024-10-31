@@ -45,6 +45,7 @@ class JobVacancyController extends Controller
             'end_date' => 'required|date',
             'min_salary' => 'required|integer',
             'max_salary' => 'required|integer',
+            'max_pax' => 'required|integer',
         ]);
 
         $data = [
@@ -61,6 +62,7 @@ class JobVacancyController extends Controller
             'min_salary' => $request->input('min_salary'),
             'max_salary' => $request->input('max_salary'),
             'status' => 'Active',
+            'max_pax' => $request->max_pax,
         ];
         $job = JobVacancy::create($data);
         return redirect()->route('admin.job')->with('success','Job created successfully');
@@ -70,7 +72,6 @@ class JobVacancyController extends Controller
     public function edit($id){
         $title = "Edit Job";
         $job = JobVacancy::find($id);
-
         return view('admin.job.edit',[
             'title' => $title,
             'breadcrump' => Breadcrumbs::render($title),
@@ -93,6 +94,8 @@ class JobVacancyController extends Controller
             'end_date' => 'required|date',
             'min_salary' => 'required|integer',
             'max_salary' => 'required|integer',
+            'max_pax' => 'required|integer',
+
         ]);
 
         $data = [
@@ -108,6 +111,8 @@ class JobVacancyController extends Controller
             'end_date' => $request->input('end_date'),
             'min_salary' => $request->input('min_salary'),
             'max_salary' => $request->input('max_salary'),
+            'max_pax' => $request->max_pax,
+
         ];
         $job = JobVacancy::find($id);
         $job->update($data);

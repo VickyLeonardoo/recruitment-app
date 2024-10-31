@@ -134,7 +134,7 @@ class ApplicationController extends Controller
     }
 
     public function setRecomendation($id){
-        $application = Application::find($id);
+        $application = Application::find($id); 
         if ($application->is_recomended == true) {
             $application->is_recomended = false;
         }else{

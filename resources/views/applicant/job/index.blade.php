@@ -12,6 +12,7 @@
                                 <th>Departement</th>          
                                 <th>Position</th>          
                                 <th>Status</th>          
+                                <th class="text-center">Batas Pelamar</th>          
                                 <th></th>          
                             </tr>
                         </thead>
@@ -22,8 +23,13 @@
                                     <td>{{ $job->departement->name }}</td>
                                     <td>{{ $job->position->name }}</td>
                                     <td>{{ $job->status }}</td>
-                                    <td>
-                                        <a class="btn btn-secondary mt-3" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
+                                    <td class="text-center"><span class="badge bg-primary">{{ $job->max_pax }}</span></td>
+                                    <td class="text-center">
+                                        @if ($job->application->count() < $job->max_pax)
+                                            <a class="btn btn-secondary mt-3" href="{{ route('applicant.job.detail', $job->code) }}">Detail</a>
+                                        @else
+                                            <strong>Penuh</strong>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

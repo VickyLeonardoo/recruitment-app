@@ -38,18 +38,25 @@ class JobVacancyController extends Controller
 
     public function applyJob($id)
     {
-        $checkAppliation = Application::where('user_id',Auth::guard('user')->id())->latest()->first();
-        if ($checkAppliation) {
-            if (in_array($checkAppliation->status, ['Pending'])) {
-                return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
-            }
+        $checkApplication = Application::where('user_id', Auth::guard('user')->id())->latest()->first();
+        if ($checkApplication && in_array($checkApplication->status, ['Pending'])) {
+            return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
         }
 
         try {
-            // Start the transaction
+            // Mulai transaksi
             DB::beginTransaction();
 
-            // Generate reg_no with format MC{year}{month}{day}{microsecond}
+            // Ambil data job vacancy dengan penguncian baris
+            $jobVacancy = JobVacancy::where('id', $id)->lockForUpdate()->first();
+
+            // Cek apakah jumlah pelamar sudah mencapai batas maksimum
+            if ($jobVacancy->application()->count() >= $jobVacancy->max_pax) {
+                DB::rollBack();
+                return back()->with('error', 'Maaf, jumlah maksimum pelamar telah tercapai.');
+            }
+
+            // Generate nomor registrasi
             $reg_no = 'MC' . now()->format('YmdHisu');
 
             $application = Application::create([
@@ -60,6 +67,7 @@ class JobVacancyController extends Controller
                 'status' => 'pending',
             ]);
 
+            // Generate nomor tes
             $lastTestNumber = Test::max('test_no') ?? 'PT000000';
             $newTestNumber = 'PT' . str_pad(intval(substr($lastTestNumber, 2)) + 1, 6, '0', STR_PAD_LEFT);
 
@@ -72,17 +80,16 @@ class JobVacancyController extends Controller
                 'application_id' => $application->id,
             ]);
 
-            // If we've gotten this far, it means both inserts were successful.
-            // So, let's commit the transaction.
+            // Commit transaksi
             DB::commit();
 
             return redirect()->route('applicant.application.detail', $application->id)
                             ->with('success', 'Berhasil melakukan pendaftaran');
         } catch (\Exception $e) {
-            // Something went wrong, let's rollback the transaction
+            // Rollback jika ada kesalahan
             DB::rollBack();
 
-            // Log the error
+            // Log error
             Log::error('Error in applyJob: ' . $e->getMessage());
 
             return back()->with('error', 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.');

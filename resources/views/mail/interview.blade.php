@@ -42,7 +42,7 @@
         </div>
 
         <div class="content">
-            <p>Hi {{ $user->name }},</p>
+            <p>Hi {{ $user->user_detail->full_name }},</p>
 
             <p>We are pleased to invite you to an interview. Here are the details:</p>
 
@@ -63,7 +63,7 @@
         </div>
 
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Your Company. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} PT Xyz. All rights reserved.</p>
         </div>
     </div>
 </body>

@@ -10,6 +10,7 @@ use App\Models\ScheduleLine;
 use Illuminate\Http\Request;
 use App\Charts\MonthlyUsersChart;
 use App\Http\Controllers\Controller;
+use App\Mail\CancelInterview;
 use App\Mail\SentInterviewMail;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Facades\Mail;
@@ -104,8 +105,10 @@ class InterviewController extends Controller
 
     public function destroy($id){
         $schedule = Schedule::find($id);
-        if ($schedule->line) {
-            return redirect()->back()->with('error','Schedule has lines, cannot delete');
+        if ($schedule->status != 'Cancelled') {
+            if ($schedule->line) {
+                return redirect()->back()->with('error','Schedule has lines, cannot delete');
+            }
         }
         Schedule::find($id)->delete();
         return redirect(route('admin.interview'))->with('success','Success delete schedule');
@@ -125,7 +128,19 @@ class InterviewController extends Controller
 
     public function setCancelled($id){
         $schedule = Schedule::find($id);
+        
         $schedule->update(['status' => 'Cancelled']);
+
+        foreach ($schedule->line as $line) {
+            $line->application->is_interview = 0;
+            $line->application->save();
+        }
+        $users = $schedule->line->pluck('application.user')->unique();
+        
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new CancelInterview($schedule,$user));
+        }
+
         return redirect(route('admin.interview'))->with('success','Success update schedule');
     }
 
@@ -150,7 +165,6 @@ class InterviewController extends Controller
     public function generateApplicant($id){
         $schedule = Schedule::find($id);
         $aplications = Application::where('status', 'Interview')->where('is_interview',false)->where('job_vacancy_id',$schedule->job_vacancy_id)->get();
-
         foreach ($aplications as $apl) {
             ScheduleLine::create([
                 'schedule_id' => $id,
@@ -220,9 +234,13 @@ class InterviewController extends Controller
             $query->where('is_email', false)->with('application.user');
         }])->find($id);
 
+        if (!$schedule || $schedule->line->isEmpty()) {
+            return redirect()->back()->with('error', 'No lines found for this schedule.');
+        }
+
         // Ambil semua user dari setiap line->application
         $users = $schedule->line->pluck('application.user')->unique();
-
+        
         // Jika kamu hanya ingin mendapatkan email
         $emails = $users->pluck('email')->unique();
         // Proses pengiriman email hanya untuk yang is_mail = false
