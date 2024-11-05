@@ -226,7 +226,7 @@ class InterviewController extends Controller
             'apl' => $application
         ]);
     }
-
+ 
     public function sentMail($id)
     {
         // Eager load relasi line, application, dan user, serta filter line dengan is_mail = false
