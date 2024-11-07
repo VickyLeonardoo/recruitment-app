@@ -6,6 +6,7 @@ use App\Models\Choice;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\TestResult;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 class QuestionController extends Controller
@@ -135,6 +136,12 @@ class QuestionController extends Controller
 
     public function deleteQuestion($id){
         $question = Question::find($id);
+
+        $checkQuestionFromTestResult = TestResult::where('question_id',$id)->first();
+
+        if ($checkQuestionFromTestResult){
+            return redirect()->back()->with('error','Question cannot be deleted because it is used in test result');
+        }
 
         $question->delete();
         return redirect()->back()->with('success','Question deleted successfully');
