@@ -17,6 +17,25 @@ class UserDetail extends Model
         return $this->belongsTo(User::class);
     }
 
+
+    public function checkUserDetail()
+    {
+        // Ambil semua atribut yang harus terisi
+        $requiredAttributes = [
+            'user_id', 'full_name', 'identity_no', 'phone', 
+            'address', 'city', 'dob', 'gender', 
+            'status', 'nationality', 'religion'
+        ];
+
+        // Cek apakah setiap atribut terisi
+        foreach ($requiredAttributes as $attribute) {
+            if (empty($this->$attribute)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     
 
 }

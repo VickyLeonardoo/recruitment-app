@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Position;
 use App\Models\Departement;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Diglactic\Breadcrumbs\Breadcrumbs;
@@ -28,19 +29,33 @@ class DepartementController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-            'code' => 'required|string',
+            'code' => 'required|string|unique:departements,code',
             'name' => 'required|string',
         ]);
+
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $counter = 1;
+
+        // Cek apakah slug sudah ada di database dan lakukan increment jika ada duplikat
+        while (Departement::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
+            $counter++;
+        }
 
         $data = [
             'code' => $request->code,
             'name' => $request->name,
+            'slug' => $slug
         ];
+
         Departement::create($data);
-        return redirect()->route('admin.departement')->with('success','You have successfully added a new departement!');
+        return redirect()->route('admin.departement')->with('success', 'You have successfully added a new department!');
     }
+
 
     public function edit($id){
         $title = "Edit Departement";

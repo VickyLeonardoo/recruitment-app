@@ -97,7 +97,7 @@
                                                         value="{{ $user->staff->name }}" />
                                                 @else
                                                     <input class="form-register" type="text" name="name" disabled
-                                                        value="{{ $user->user->name }}" />
+                                                        value="{{ $user->user->user_detail->full_name }}" />
                                                 @endif
                                             </div>
 

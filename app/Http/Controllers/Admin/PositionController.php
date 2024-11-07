@@ -75,9 +75,18 @@ class PositionController extends Controller
 
     public function destroy($id)
     {
-        Position::find($id)->delete();
-        return redirect()->back()->with('success','Position deleted successfully');
+        try {
+            Position::findOrFail($id)->delete();
+            return redirect()->back()->with('success', 'Position deleted successfully');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Check for foreign key constraint error
+            if ($e->getCode() === '23000') {
+                return redirect()->back()->with('error', 'Failed to delete position because it is associated with staff records.');
+            }
 
+            // Handle other potential exceptions
+            return redirect()->back()->with('error', 'An unexpected error occurred while trying to delete the position.');
+        }
     }
 
     public function getPositions($departementId){

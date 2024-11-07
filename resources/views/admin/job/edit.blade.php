@@ -1,13 +1,8 @@
 @extends('partials.admin.header')
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="#">{{ Breadcrumbs::render('Add Departement') }}</a></li>
-        </ol>
-    </nav>
     <div class="row">
         <div class="mb-3">
-            <a href="{{ route('admin.departement') }}" class="btn btn-primary"> <i class="fas fa-arrow-left"></i> Back</a>
+            <a href="{{ route('admin.job') }}" class="btn btn-primary"> <i class="fas fa-arrow-left"></i> Back</a>
         </div>
 
         <form action="{{ route('admin.job.update', $job->id) }}" method="post">

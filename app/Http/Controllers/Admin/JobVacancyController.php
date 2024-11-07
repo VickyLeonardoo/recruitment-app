@@ -21,6 +21,17 @@ class JobVacancyController extends Controller
         ]);
     }
 
+    public function show($id){
+        $title = "Edit Job";
+        $job = JobVacancy::find($id);
+        return view('admin.job.show',[
+            'title' => $title,
+            'breadcrump' => Breadcrumbs::render($title),
+            'departements' => Departement::with('position')->get(),
+            'job' => $job,
+        ]);
+    }
+
     public function create(){
         $title = "Add Job";
 
@@ -47,6 +58,10 @@ class JobVacancyController extends Controller
             'max_salary' => 'required|integer',
             'max_pax' => 'required|integer',
         ]);
+
+        if ($request->start_date > $request->end_date) {
+            return redirect()->back()->withErrors('End date must be greater than start date')->withInput();
+        }
 
         $data = [
             'code' => $request->input('code'),
@@ -80,7 +95,8 @@ class JobVacancyController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'code' => 'required|string',
             'title' => 'required|string',
@@ -95,8 +111,26 @@ class JobVacancyController extends Controller
             'min_salary' => 'required|integer',
             'max_salary' => 'required|integer',
             'max_pax' => 'required|integer',
-
         ]);
+
+        $errors = [];
+
+        if ($request->start_date > $request->end_date) {
+            $errors[] = 'End date must be greater than start date.';
+        }
+
+        if ($request->min_salary > $request->max_salary) {
+            $errors[] = 'Max salary must be greater than min salary.';
+        }
+
+        if ($request->max_pax < 1) {
+            $errors[] = 'Max pax must be greater than 0.';
+        }
+
+        // Jika ada error, redirect dengan semua pesan error
+        if (!empty($errors)) {
+            return redirect()->back()->withErrors($errors)->withInput();
+        }
 
         $data = [
             'code' => $request->input('code'),
@@ -111,13 +145,15 @@ class JobVacancyController extends Controller
             'end_date' => $request->input('end_date'),
             'min_salary' => $request->input('min_salary'),
             'max_salary' => $request->input('max_salary'),
-            'max_pax' => $request->max_pax,
-
+            'max_pax' => $request->input('max_pax'),
         ];
+
         $job = JobVacancy::find($id);
         $job->update($data);
-        return redirect()->route('admin.job')->with('success','Job updated successfully');
+
+        return redirect()->route('admin.job')->with('success', 'Job updated successfully');
     }
+
 
     public function getPositions($deptId)
     {

@@ -15,8 +15,14 @@ class PasswordController extends Controller
 
     public function update(Request $request){
         $request->validate([
-            'password' => 'required|string',
+            'password' => 'required|string|min:8',
             'confirmation_password' => 'required|same:password',
+        ],[
+            'password.required' => 'Password harus diisi',
+            'password.string' => 'Password harus berupa a-z, A-Z, 1-9,!#$%^&*()_+',
+            'password.min' => 'Password minimal 8 karakter',
+            'confirmation_password.required' => 'Konfirmasi password harus sama',
+            'confirmation_password.same' => 'Konfirmasi password tidak sama',
         ]);
 
         $user = Auth::guard('user')->user();

@@ -49,6 +49,7 @@ class AccountController extends Controller
             'role_id' => $request->role_id,
             'is_active' => true,
             'password' => bcrypt('123'),
+            'is_internal' => true,
         ];
 
         

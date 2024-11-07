@@ -192,10 +192,12 @@
                 </div>
             </div>
         </div>
+        @role('Manager')
         <form action="{{ route('admin.application.recomendation', $apl->id) }}">
             @csrf
             <button type="submit" class="btn {{ $apl->is_recomended == '0' ? 'btn-primary' : 'btn-danger' }}"></i>{{ $apl->is_recomended == '0' ? 'Recommendation':'Cancel Recommendation' }}</button>
         </form>
+        @endrole
     </div>
 @endsection
 @push('js')

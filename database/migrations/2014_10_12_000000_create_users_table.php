@@ -19,7 +19,9 @@ return new class extends Migration
             $table->foreignId('role_id')->references('id')->on('roles');
             $table->boolean('is_verified');
             $table->boolean('is_active');
+            $table->softDeletes();
             $table->rememberToken();
+            $table->boolean('is_internal')->default(false);
             $table->timestamps();
         });
     }

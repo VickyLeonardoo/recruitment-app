@@ -17,6 +17,7 @@
                 {{-- <a href="{{ route('admin.job.create') }}" class="btn btn-primary">Add Data</a> --}}
             </div> 
             <div class="card-body">
+                @hasanyrole(['Admin|HR'])
                 <div class="mb-3 d-flex justify-content-between">
                     <div>
                         <button class="btn btn-primary" onclick="markSelected()">MARK</button>
@@ -28,6 +29,7 @@
                         <button class="btn btn-danger" onclick="rejectSelected()">Reject</button>
                     </div>
                 </div>
+                @endhasanyrole
                 <div class="table-responsive">
                     <table class="table table-striped" id="application" width="100%">
                         <thead>

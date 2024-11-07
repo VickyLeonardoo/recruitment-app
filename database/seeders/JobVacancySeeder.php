@@ -32,6 +32,7 @@ class JobVacancySeeder extends Seeder
                 'max_salary' => '10000',
                 'created_at' => Date::now(),
                 'updated_at' => Date::now(),
+                'max_pax' => 2,
             ]
         ];
         DB::table('job_vacancies')->insert($data);

@@ -24,9 +24,9 @@ class LoginController extends Controller
             if ($user->role_id == 1) {
                 return redirect()->route('admin.dashboard')->with('success','Login Successfully');
             }elseif ($user->role_id == 2) {
-                return redirect()->intended('admin');
+                return redirect()->route('admin.dashboard')->with('success','Login Successfully');
             }else{
-                return redirect()->intended('admin');
+                return redirect()->route('admin.dashboard')->with('success','Login Successfully');
             }
         }elseif (Auth::guard('user')->attempt($kredensil)) {
             $user = Auth::guard('user')->user();

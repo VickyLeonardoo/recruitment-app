@@ -43,6 +43,12 @@ class JobVacancyController extends Controller
             return back()->with('error', 'Gagal! Anda hanya dapat melakukan pendaftaran sekali dalam satu waktu');
         }
 
+        $user = Auth::guard('user')->user()->user_detail;
+
+        if ($user->checkUserDetail() == false) {
+            return redirect()->route('applicant.profile.info')->with('error','Silahkan lengkapi profil Anda terlebih dahulu');
+        }
+
         try {
             // Mulai transaksi
             DB::beginTransaction();
