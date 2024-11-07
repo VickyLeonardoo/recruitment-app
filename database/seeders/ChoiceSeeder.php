@@ -14,27 +14,31 @@ class ChoiceSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        // Fetch all true_false questions
+        $questions = DB::table('questions')->where('type', 'true_false')->get();
 
-        // Ambil semua pertanyaan dari tabel questions
-        $questions = DB::table('questions')->get();
-
-        // Untuk setiap pertanyaan, buat 4 pilihan jawaban
         foreach ($questions as $question) {
-            $labels = ['A', 'B', 'C', 'D'];
-            $correctAnswer = rand(0, 3); // Random index untuk menentukan jawaban benar
+            // Insert 'True' choice
+            DB::table('choices')->insert([
+                'question_id' => $question->id,
+                'choice' => 'True',
+                'choiceImage' => null,
+                'is_correct' => rand(0, 1) == 1, // Randomly set True as correct answer
+                'label' => 'A',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-            for ($i = 0; $i < 4; $i++) {
-                DB::table('choices')->insert([
-                    'question_id' => $question->id,
-                    'choice' => $faker->sentence(5), // Random kalimat untuk jawaban
-                    'choiceImage' => null, // Nullable image
-                    'is_correct' => ($i == $correctAnswer), // Set true untuk jawaban yang benar
-                    'label' => $labels[$i], // Label A, B, C, D
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
+            // Insert 'False' choice
+            DB::table('choices')->insert([
+                'question_id' => $question->id,
+                'choice' => 'False',
+                'choiceImage' => null,
+                'is_correct' => rand(0, 1) == 0, // Randomly set False as correct answer
+                'label' => 'B',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
     }
 }
