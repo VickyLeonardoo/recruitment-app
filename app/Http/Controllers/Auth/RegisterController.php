@@ -10,7 +10,10 @@ use App\Models\EducationDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Mail\SentVerifyMail;
+use App\Models\VerifyUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -73,7 +76,7 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password), // Hash password
                 'is_active' => true,
-                'is_verified' => true,
+                'is_verified' => false,
                 'role_id' => 4,
             ];
 
@@ -84,7 +87,7 @@ class RegisterController extends Controller
             $user_create = User::create($user);
 
             // Create user detail
-            UserDetail::create([
+            $user_detail = UserDetail::create([
                 'user_id' => $user_create->id,
                 'full_name' => $request->full_name,
                 'dob' => $dob,
@@ -94,12 +97,23 @@ class RegisterController extends Controller
             ]);
 
             // Log in the user
-            Auth::guard('user')->login($user_create);
+            
+            // Auth::guard('user')->login($user_create);
+            $token = bin2hex(random_bytes(32));
 
+            $verif = VerifyUser::create([
+                'user_id' => $user_create->id,
+                'token' => $token
+            ]);
+
+            Mail::to($user_create->email)->send(new SentVerifyMail($user_detail,$token));
+
+            //)
             // Commit transaction
             DB::commit();
+            return redirect()->route('auth.login')->with('success','Registration complete, check your email to verify your account');
 
-            return redirect()->route('applicant.profile.info')->with('success', 'Registration and Login Successful');
+            // return redirect()->route('applicant.profile.info')->with('success', 'Registration and Login Successful');
         } catch (\Exception $e) {
             // Rollback transaction if there is any error
             DB::rollBack();
@@ -111,4 +125,27 @@ class RegisterController extends Controller
             return redirect()->back()->withErrors(['error' => 'Registration failed. Please try again.'])->withInput();
         }
     }    
+
+    public function verifyAccount($token){
+        $tokenFind = VerifyUser::where('token',$token)->first();
+
+        if (!$token) {
+            return redirect()->route('auth.login')->with('error','Token not found');
+        }
+
+        if ($tokenFind) {
+            $user = User::find($tokenFind->user_id);
+            $user->update([
+                'is_verified' => true,
+            ]);
+
+            Auth::guard('user')->login($user);
+
+            // $tokenFind->delete();
+
+            return redirect()->route('applicant.profile.info')->with('success', 'Registration and Login Successful');
+            
+        }
+
+    }
 }

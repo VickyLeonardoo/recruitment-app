@@ -45,6 +45,7 @@ class ResetPasswordController extends Controller
         Mail::to($data['email'])->send(new ResetPasswordMail($data, $token));
         return redirect(route('auth.login'))->with('success','Password reset link has been sent to your email');
     }
+    
     public function resetPassword($token){
         $userFind = ResetPassword::where('token',$token)->first();
         if (!$userFind || $userFind->created_at->addMinutes(10) < Carbon::now()) {

@@ -35,3 +35,4 @@ Route::get('/reset/password/',[ResetPasswordController::class, 'index'])->name('
 Route::post('/reset/password/',[ResetPasswordController::class, 'store'])->name('auth.reset.store');
 Route::get('/reset/password/{token}',[ResetPasswordController::class, 'resetPassword'])->name('auth.reset.password');
 Route::post('/reset/password/{token}',[ResetPasswordController::class, 'processResetPassword'])->name('auth.process.reset.password');
+Route::get('/verify/account/{token}',[RegisterController::class, 'verifyAccount'])->name('auth.account.verify');
